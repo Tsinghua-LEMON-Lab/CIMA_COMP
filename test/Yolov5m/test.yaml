@@ -1,0 +1,9211 @@
+ir_version: e100-ir-1
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - channel: 3
+      channel_last: true
+      width: 512
+      height: 512
+  backbone_Conv_0:
+    inputs:
+    - ref: graph_input:0
+      channel: 3
+      width: 512
+      height: 512
+    outputs:
+    - channel: 64
+      width: 256
+      height: 256
+    weights:
+      weight:
+        shape:
+        - 64
+        - 3
+        - 7
+        - 7
+    op:
+      op_id: conv2d
+      in_channel: 3
+      out_channel: 64
+      bias: false
+      kernel: 7
+      stride: 2
+      padding: 3
+      dilation: 1
+  Silu_backbone_Conv_0:
+    inputs:
+    - ref: backbone_Conv_0
+      channel: 64
+      width: 256
+      height: 256
+    outputs:
+    - channel: 64
+      width: 256
+      height: 256
+    op:
+      op_id: silu
+  backbone_Conv_3:
+    inputs:
+    - ref: Silu_backbone_Conv_0
+      channel: 64
+      width: 256
+      height: 256
+    outputs:
+    - channel: 128
+      width: 128
+      height: 128
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  Silu_backbone_Conv_3:
+    inputs:
+    - ref: backbone_Conv_3
+      channel: 128
+      width: 128
+      height: 128
+    outputs:
+    - channel: 128
+      width: 128
+      height: 128
+    op:
+      op_id: silu
+  backbone_Conv_7:
+    inputs:
+    - ref: Silu_backbone_Conv_3
+      channel: 128
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    weights:
+      weight:
+        shape:
+        - 64
+        - 128
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 64
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_11:
+    inputs:
+    - ref: Silu_backbone_Conv_3
+      channel: 128
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    weights:
+      weight:
+        shape:
+        - 64
+        - 128
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 64
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_7:
+    inputs:
+    - ref: backbone_Conv_7
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    op:
+      op_id: silu
+  Silu_backbone_Conv_11:
+    inputs:
+    - ref: backbone_Conv_11
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    op:
+      op_id: silu
+  backbone_Conv_15:
+    inputs:
+    - ref: Silu_backbone_Conv_11
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    weights:
+      weight:
+        shape:
+        - 64
+        - 64
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_15:
+    inputs:
+    - ref: backbone_Conv_15
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    op:
+      op_id: silu
+  backbone_Conv_19:
+    inputs:
+    - ref: Silu_backbone_Conv_15
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    weights:
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Silu_backbone_Conv_19:
+    inputs:
+    - ref: backbone_Conv_19
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    op:
+      op_id: silu
+  backbone_Add_0:
+    inputs:
+    - ref: Silu_backbone_Conv_19
+      channel: 64
+      width: 128
+      height: 128
+    - ref: Silu_backbone_Conv_11
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    op:
+      op_id: add
+  backbone_Conv_24:
+    inputs:
+    - ref: backbone_Add_0
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    weights:
+      weight:
+        shape:
+        - 64
+        - 64
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_24:
+    inputs:
+    - ref: backbone_Conv_24
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    op:
+      op_id: silu
+  backbone_Conv_28:
+    inputs:
+    - ref: Silu_backbone_Conv_24
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    weights:
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Silu_backbone_Conv_28:
+    inputs:
+    - ref: backbone_Conv_28
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    op:
+      op_id: silu
+  backbone_Add_1:
+    inputs:
+    - ref: Silu_backbone_Conv_28
+      channel: 64
+      width: 128
+      height: 128
+    - ref: backbone_Add_0
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    op:
+      op_id: add
+  backbone_Concat_0:
+    inputs:
+    - ref: backbone_Add_1
+      channel: 64
+      width: 128
+      height: 128
+    - ref: Silu_backbone_Conv_7
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 128
+      width: 128
+      height: 128
+    op:
+      op_id: concat
+      axis: 1
+  backbone_Conv_34:
+    inputs:
+    - ref: backbone_Concat_0
+      channel: 128
+      width: 128
+      height: 128
+    outputs:
+    - channel: 128
+      width: 128
+      height: 128
+    weights:
+      weight:
+        shape:
+        - 128
+        - 128
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_34:
+    inputs:
+    - ref: backbone_Conv_34
+      channel: 128
+      width: 128
+      height: 128
+    outputs:
+    - channel: 128
+      width: 128
+      height: 128
+    op:
+      op_id: silu
+  backbone_Split_0:
+    inputs:
+    - ref: Silu_backbone_Conv_34
+      channel: 128
+      width: 128
+      height: 128
+    outputs:
+    - channel: 64
+      width: 128
+      height: 128
+    - channel: 64
+      width: 128
+      height: 128
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+  backbone_Conv_38_0_0:
+    inputs:
+    - ref: backbone_Split_0:0
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 256
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_38_1_0:
+    inputs:
+    - ref: backbone_Split_0:1
+      channel: 64
+      width: 128
+      height: 128
+    outputs:
+    - channel: 256
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Add_2:
+    inputs:
+    - ref: backbone_Conv_38_0_0
+      channel: 256
+      width: 64
+      height: 64
+    - ref: backbone_Conv_38_1_0
+      channel: 256
+      width: 64
+      height: 64
+    outputs:
+    - channel: 256
+      width: 64
+      height: 64
+    op:
+      op_id: add
+  Silu_backbone_Add_2:
+    inputs:
+    - ref: backbone_Add_2
+      channel: 256
+      width: 64
+      height: 64
+    outputs:
+    - channel: 256
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  backbone_Conv_42:
+    inputs:
+    - ref: Silu_backbone_Add_2
+      channel: 256
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_46:
+    inputs:
+    - ref: Silu_backbone_Add_2
+      channel: 256
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_42:
+    inputs:
+    - ref: backbone_Conv_42
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  Silu_backbone_Conv_46:
+    inputs:
+    - ref: backbone_Conv_46
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  backbone_Conv_50:
+    inputs:
+    - ref: Silu_backbone_Conv_46
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 128
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_50:
+    inputs:
+    - ref: backbone_Conv_50
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  backbone_Split_1:
+    inputs:
+    - ref: Silu_backbone_Conv_50
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 64
+      width: 64
+      height: 64
+    - channel: 64
+      width: 64
+      height: 64
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+  backbone_Conv_54_0_0:
+    inputs:
+    - ref: backbone_Split_1:0
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_54_1_0:
+    inputs:
+    - ref: backbone_Split_1:1
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Add_3:
+    inputs:
+    - ref: backbone_Conv_54_0_0
+      channel: 128
+      width: 64
+      height: 64
+    - ref: backbone_Conv_54_1_0
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: add
+  Silu_backbone_Add_3:
+    inputs:
+    - ref: backbone_Add_3
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  backbone_Add_4:
+    inputs:
+    - ref: Silu_backbone_Add_3
+      channel: 128
+      width: 64
+      height: 64
+    - ref: Silu_backbone_Conv_46
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: add
+  backbone_Conv_59:
+    inputs:
+    - ref: backbone_Add_4
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 128
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_59:
+    inputs:
+    - ref: backbone_Conv_59
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  backbone_Split_2:
+    inputs:
+    - ref: Silu_backbone_Conv_59
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 64
+      width: 64
+      height: 64
+    - channel: 64
+      width: 64
+      height: 64
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+  backbone_Conv_63_0_0:
+    inputs:
+    - ref: backbone_Split_2:0
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_63_1_0:
+    inputs:
+    - ref: backbone_Split_2:1
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Add_5:
+    inputs:
+    - ref: backbone_Conv_63_0_0
+      channel: 128
+      width: 64
+      height: 64
+    - ref: backbone_Conv_63_1_0
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: add
+  Silu_backbone_Add_5:
+    inputs:
+    - ref: backbone_Add_5
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  backbone_Add_6:
+    inputs:
+    - ref: Silu_backbone_Add_5
+      channel: 128
+      width: 64
+      height: 64
+    - ref: backbone_Add_4
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: add
+  backbone_Conv_68:
+    inputs:
+    - ref: backbone_Add_6
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 128
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_68:
+    inputs:
+    - ref: backbone_Conv_68
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  backbone_Split_3:
+    inputs:
+    - ref: Silu_backbone_Conv_68
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 64
+      width: 64
+      height: 64
+    - channel: 64
+      width: 64
+      height: 64
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+  backbone_Conv_72_0_0:
+    inputs:
+    - ref: backbone_Split_3:0
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_72_1_0:
+    inputs:
+    - ref: backbone_Split_3:1
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Add_7:
+    inputs:
+    - ref: backbone_Conv_72_0_0
+      channel: 128
+      width: 64
+      height: 64
+    - ref: backbone_Conv_72_1_0
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: add
+  Silu_backbone_Add_7:
+    inputs:
+    - ref: backbone_Add_7
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  backbone_Add_8:
+    inputs:
+    - ref: Silu_backbone_Add_7
+      channel: 128
+      width: 64
+      height: 64
+    - ref: backbone_Add_6
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: add
+  backbone_Conv_77:
+    inputs:
+    - ref: backbone_Add_8
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 128
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_77:
+    inputs:
+    - ref: backbone_Conv_77
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  backbone_Split_4:
+    inputs:
+    - ref: Silu_backbone_Conv_77
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 64
+      width: 64
+      height: 64
+    - channel: 64
+      width: 64
+      height: 64
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+  backbone_Conv_81_0_0:
+    inputs:
+    - ref: backbone_Split_4:0
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_81_1_0:
+    inputs:
+    - ref: backbone_Split_4:1
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Add_9:
+    inputs:
+    - ref: backbone_Conv_81_0_0
+      channel: 128
+      width: 64
+      height: 64
+    - ref: backbone_Conv_81_1_0
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: add
+  Silu_backbone_Add_9:
+    inputs:
+    - ref: backbone_Add_9
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  backbone_Add_10:
+    inputs:
+    - ref: Silu_backbone_Add_9
+      channel: 128
+      width: 64
+      height: 64
+    - ref: backbone_Add_8
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: add
+  backbone_Concat_1:
+    inputs:
+    - ref: backbone_Add_10
+      channel: 128
+      width: 64
+      height: 64
+    - ref: Silu_backbone_Conv_42
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 256
+      width: 64
+      height: 64
+    op:
+      op_id: concat
+      axis: 1
+  backbone_Conv_87:
+    inputs:
+    - ref: backbone_Concat_1
+      channel: 256
+      width: 64
+      height: 64
+    outputs:
+    - channel: 256
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_87:
+    inputs:
+    - ref: backbone_Conv_87
+      channel: 256
+      width: 64
+      height: 64
+    outputs:
+    - channel: 256
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  backbone_Split_5:
+    inputs:
+    - ref: Silu_backbone_Conv_87
+      channel: 256
+      width: 64
+      height: 64
+    outputs:
+    - channel: 64
+      width: 64
+      height: 64
+    - channel: 64
+      width: 64
+      height: 64
+    - channel: 64
+      width: 64
+      height: 64
+    - channel: 64
+      width: 64
+      height: 64
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+  backbone_Conv_91_0_0:
+    inputs:
+    - ref: backbone_Split_5:0
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_91_1_0:
+    inputs:
+    - ref: backbone_Split_5:1
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_91_2_0:
+    inputs:
+    - ref: backbone_Split_5:2
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_91_3_0:
+    inputs:
+    - ref: backbone_Split_5:3
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Add_11:
+    inputs:
+    - ref: backbone_Conv_91_0_0
+      channel: 512
+      width: 32
+      height: 32
+    - ref: backbone_Conv_91_1_0
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Add_12:
+    inputs:
+    - ref: backbone_Add_11
+      channel: 512
+      width: 32
+      height: 32
+    - ref: backbone_Conv_91_2_0
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Add_13:
+    inputs:
+    - ref: backbone_Add_12
+      channel: 512
+      width: 32
+      height: 32
+    - ref: backbone_Conv_91_3_0
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Silu_backbone_Add_13:
+    inputs:
+    - ref: backbone_Add_13
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Conv_95:
+    inputs:
+    - ref: Silu_backbone_Add_13
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_99:
+    inputs:
+    - ref: Silu_backbone_Add_13
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_95:
+    inputs:
+    - ref: backbone_Conv_95
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  Silu_backbone_Conv_99:
+    inputs:
+    - ref: backbone_Conv_99
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Conv_103:
+    inputs:
+    - ref: Silu_backbone_Conv_99
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_103:
+    inputs:
+    - ref: backbone_Conv_103
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Split_6:
+    inputs:
+    - ref: Silu_backbone_Conv_103
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+  backbone_Conv_107_0_0:
+    inputs:
+    - ref: backbone_Split_6:0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_107_1_0:
+    inputs:
+    - ref: backbone_Split_6:1
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_107_2_0:
+    inputs:
+    - ref: backbone_Split_6:2
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_107_3_0:
+    inputs:
+    - ref: backbone_Split_6:3
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Add_14:
+    inputs:
+    - ref: backbone_Conv_107_0_0
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_107_1_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Add_15:
+    inputs:
+    - ref: backbone_Add_14
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_107_2_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Add_16:
+    inputs:
+    - ref: backbone_Add_15
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_107_3_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Silu_backbone_Add_16:
+    inputs:
+    - ref: backbone_Add_16
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Add_17:
+    inputs:
+    - ref: Silu_backbone_Add_16
+      channel: 256
+      width: 32
+      height: 32
+    - ref: Silu_backbone_Conv_99
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Conv_112:
+    inputs:
+    - ref: backbone_Add_17
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_112:
+    inputs:
+    - ref: backbone_Conv_112
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Split_7:
+    inputs:
+    - ref: Silu_backbone_Conv_112
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+  backbone_Conv_116_0_0:
+    inputs:
+    - ref: backbone_Split_7:0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_116_1_0:
+    inputs:
+    - ref: backbone_Split_7:1
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_116_2_0:
+    inputs:
+    - ref: backbone_Split_7:2
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_116_3_0:
+    inputs:
+    - ref: backbone_Split_7:3
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Add_18:
+    inputs:
+    - ref: backbone_Conv_116_0_0
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_116_1_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Add_19:
+    inputs:
+    - ref: backbone_Add_18
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_116_2_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Add_20:
+    inputs:
+    - ref: backbone_Add_19
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_116_3_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Silu_backbone_Add_20:
+    inputs:
+    - ref: backbone_Add_20
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Add_21:
+    inputs:
+    - ref: Silu_backbone_Add_20
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Add_17
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Conv_121:
+    inputs:
+    - ref: backbone_Add_21
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_121:
+    inputs:
+    - ref: backbone_Conv_121
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Split_8:
+    inputs:
+    - ref: Silu_backbone_Conv_121
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+  backbone_Conv_125_0_0:
+    inputs:
+    - ref: backbone_Split_8:0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_125_1_0:
+    inputs:
+    - ref: backbone_Split_8:1
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_125_2_0:
+    inputs:
+    - ref: backbone_Split_8:2
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_125_3_0:
+    inputs:
+    - ref: backbone_Split_8:3
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Add_22:
+    inputs:
+    - ref: backbone_Conv_125_0_0
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_125_1_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Add_23:
+    inputs:
+    - ref: backbone_Add_22
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_125_2_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Add_24:
+    inputs:
+    - ref: backbone_Add_23
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_125_3_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Silu_backbone_Add_24:
+    inputs:
+    - ref: backbone_Add_24
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Add_25:
+    inputs:
+    - ref: Silu_backbone_Add_24
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Add_21
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Conv_130:
+    inputs:
+    - ref: backbone_Add_25
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_130:
+    inputs:
+    - ref: backbone_Conv_130
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Split_9:
+    inputs:
+    - ref: Silu_backbone_Conv_130
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+  backbone_Conv_134_0_0:
+    inputs:
+    - ref: backbone_Split_9:0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_134_1_0:
+    inputs:
+    - ref: backbone_Split_9:1
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_134_2_0:
+    inputs:
+    - ref: backbone_Split_9:2
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_134_3_0:
+    inputs:
+    - ref: backbone_Split_9:3
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Add_26:
+    inputs:
+    - ref: backbone_Conv_134_0_0
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_134_1_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Add_27:
+    inputs:
+    - ref: backbone_Add_26
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_134_2_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Add_28:
+    inputs:
+    - ref: backbone_Add_27
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_134_3_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Silu_backbone_Add_28:
+    inputs:
+    - ref: backbone_Add_28
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Add_29:
+    inputs:
+    - ref: Silu_backbone_Add_28
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Add_25
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Conv_139:
+    inputs:
+    - ref: backbone_Add_29
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_139:
+    inputs:
+    - ref: backbone_Conv_139
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Split_10:
+    inputs:
+    - ref: Silu_backbone_Conv_139
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+  backbone_Conv_143_0_0:
+    inputs:
+    - ref: backbone_Split_10:0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_143_1_0:
+    inputs:
+    - ref: backbone_Split_10:1
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_143_2_0:
+    inputs:
+    - ref: backbone_Split_10:2
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_143_3_0:
+    inputs:
+    - ref: backbone_Split_10:3
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Add_30:
+    inputs:
+    - ref: backbone_Conv_143_0_0
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_143_1_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Add_31:
+    inputs:
+    - ref: backbone_Add_30
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_143_2_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Add_32:
+    inputs:
+    - ref: backbone_Add_31
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_143_3_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Silu_backbone_Add_32:
+    inputs:
+    - ref: backbone_Add_32
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Add_33:
+    inputs:
+    - ref: Silu_backbone_Add_32
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Add_29
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Conv_148:
+    inputs:
+    - ref: backbone_Add_33
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_148:
+    inputs:
+    - ref: backbone_Conv_148
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Split_11:
+    inputs:
+    - ref: Silu_backbone_Conv_148
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+  backbone_Conv_152_0_0:
+    inputs:
+    - ref: backbone_Split_11:0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_152_1_0:
+    inputs:
+    - ref: backbone_Split_11:1
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_152_2_0:
+    inputs:
+    - ref: backbone_Split_11:2
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_152_3_0:
+    inputs:
+    - ref: backbone_Split_11:3
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Add_34:
+    inputs:
+    - ref: backbone_Conv_152_0_0
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_152_1_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Add_35:
+    inputs:
+    - ref: backbone_Add_34
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_152_2_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Add_36:
+    inputs:
+    - ref: backbone_Add_35
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Conv_152_3_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Silu_backbone_Add_36:
+    inputs:
+    - ref: backbone_Add_36
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Add_37:
+    inputs:
+    - ref: Silu_backbone_Add_36
+      channel: 256
+      width: 32
+      height: 32
+    - ref: backbone_Add_33
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  backbone_Concat_2:
+    inputs:
+    - ref: backbone_Add_37
+      channel: 256
+      width: 32
+      height: 32
+    - ref: Silu_backbone_Conv_95
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    op:
+      op_id: concat
+      axis: 1
+  backbone_Conv_158:
+    inputs:
+    - ref: backbone_Concat_2
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_158:
+    inputs:
+    - ref: backbone_Conv_158
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  backbone_Split_12:
+    inputs:
+    - ref: Silu_backbone_Conv_158
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+  backbone_Conv_162_0_0:
+    inputs:
+    - ref: backbone_Split_12:0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_1_0:
+    inputs:
+    - ref: backbone_Split_12:1
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_2_0:
+    inputs:
+    - ref: backbone_Split_12:2
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_3_0:
+    inputs:
+    - ref: backbone_Split_12:3
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_4_0:
+    inputs:
+    - ref: backbone_Split_12:4
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_5_0:
+    inputs:
+    - ref: backbone_Split_12:5
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_6_0:
+    inputs:
+    - ref: backbone_Split_12:6
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_7_0:
+    inputs:
+    - ref: backbone_Split_12:7
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_0_1:
+    inputs:
+    - ref: backbone_Split_12:0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_1_1:
+    inputs:
+    - ref: backbone_Split_12:1
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_2_1:
+    inputs:
+    - ref: backbone_Split_12:2
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_3_1:
+    inputs:
+    - ref: backbone_Split_12:3
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_4_1:
+    inputs:
+    - ref: backbone_Split_12:4
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_5_1:
+    inputs:
+    - ref: backbone_Split_12:5
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_6_1:
+    inputs:
+    - ref: backbone_Split_12:6
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Conv_162_7_1:
+    inputs:
+    - ref: backbone_Split_12:7
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  backbone_Add_38:
+    inputs:
+    - ref: backbone_Conv_162_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_162_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_45:
+    inputs:
+    - ref: backbone_Conv_162_0_1
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_162_1_1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_39:
+    inputs:
+    - ref: backbone_Add_38
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_162_2_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_46:
+    inputs:
+    - ref: backbone_Add_45
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_162_2_1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_40:
+    inputs:
+    - ref: backbone_Add_39
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_162_3_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_47:
+    inputs:
+    - ref: backbone_Add_46
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_162_3_1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_41:
+    inputs:
+    - ref: backbone_Add_40
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_162_4_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_48:
+    inputs:
+    - ref: backbone_Add_47
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_162_4_1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_42:
+    inputs:
+    - ref: backbone_Add_41
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_162_5_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_49:
+    inputs:
+    - ref: backbone_Add_48
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_162_5_1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_43:
+    inputs:
+    - ref: backbone_Add_42
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_162_6_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_50:
+    inputs:
+    - ref: backbone_Add_49
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_162_6_1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_44:
+    inputs:
+    - ref: backbone_Add_43
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_162_7_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_51:
+    inputs:
+    - ref: backbone_Add_50
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_162_7_1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Concat_3:
+    inputs:
+    - ref: backbone_Add_44
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Add_51
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 1024
+      width: 16
+      height: 16
+    op:
+      op_id: concat
+      axis: 1
+  Silu_backbone_Concat_3:
+    inputs:
+    - ref: backbone_Concat_3
+      channel: 1024
+      width: 16
+      height: 16
+    outputs:
+    - channel: 1024
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  backbone_Split_13:
+    inputs:
+    - ref: Silu_backbone_Concat_3
+      channel: 1024
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 512
+      - 512
+  backbone_Conv_166_0_0:
+    inputs:
+    - ref: backbone_Split_13:0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_166_1_0:
+    inputs:
+    - ref: backbone_Split_13:1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_170_0_0:
+    inputs:
+    - ref: backbone_Split_13:0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_170_1_0:
+    inputs:
+    - ref: backbone_Split_13:1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Add_52:
+    inputs:
+    - ref: backbone_Conv_166_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_166_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_53:
+    inputs:
+    - ref: backbone_Conv_170_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_170_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Silu_backbone_Add_52:
+    inputs:
+    - ref: backbone_Add_52
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  Silu_backbone_Add_53:
+    inputs:
+    - ref: backbone_Add_53
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  backbone_Conv_174:
+    inputs:
+    - ref: Silu_backbone_Add_53
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_174:
+    inputs:
+    - ref: backbone_Conv_174
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  backbone_Split_15:
+    inputs:
+    - ref: Silu_backbone_Conv_174
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+  backbone_Conv_178_0_0:
+    inputs:
+    - ref: backbone_Split_15:0
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_178_1_0:
+    inputs:
+    - ref: backbone_Split_15:1
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_178_2_0:
+    inputs:
+    - ref: backbone_Split_15:2
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_178_3_0:
+    inputs:
+    - ref: backbone_Split_15:3
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_178_4_0:
+    inputs:
+    - ref: backbone_Split_15:4
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_178_5_0:
+    inputs:
+    - ref: backbone_Split_15:5
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_178_6_0:
+    inputs:
+    - ref: backbone_Split_15:6
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_178_7_0:
+    inputs:
+    - ref: backbone_Split_15:7
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Add_54:
+    inputs:
+    - ref: backbone_Conv_178_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_178_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_55:
+    inputs:
+    - ref: backbone_Add_54
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_178_2_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_56:
+    inputs:
+    - ref: backbone_Add_55
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_178_3_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_57:
+    inputs:
+    - ref: backbone_Add_56
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_178_4_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_58:
+    inputs:
+    - ref: backbone_Add_57
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_178_5_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_59:
+    inputs:
+    - ref: backbone_Add_58
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_178_6_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_60:
+    inputs:
+    - ref: backbone_Add_59
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_178_7_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Silu_backbone_Add_60:
+    inputs:
+    - ref: backbone_Add_60
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  backbone_Add_61:
+    inputs:
+    - ref: Silu_backbone_Add_60
+      channel: 512
+      width: 16
+      height: 16
+    - ref: Silu_backbone_Add_53
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Conv_183:
+    inputs:
+    - ref: backbone_Add_61
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_backbone_Conv_183:
+    inputs:
+    - ref: backbone_Conv_183
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  backbone_Split_16:
+    inputs:
+    - ref: Silu_backbone_Conv_183
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+  backbone_Conv_187_0_0:
+    inputs:
+    - ref: backbone_Split_16:0
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_187_1_0:
+    inputs:
+    - ref: backbone_Split_16:1
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_187_2_0:
+    inputs:
+    - ref: backbone_Split_16:2
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_187_3_0:
+    inputs:
+    - ref: backbone_Split_16:3
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_187_4_0:
+    inputs:
+    - ref: backbone_Split_16:4
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_187_5_0:
+    inputs:
+    - ref: backbone_Split_16:5
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_187_6_0:
+    inputs:
+    - ref: backbone_Split_16:6
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Conv_187_7_0:
+    inputs:
+    - ref: backbone_Split_16:7
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  backbone_Add_62:
+    inputs:
+    - ref: backbone_Conv_187_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_187_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_63:
+    inputs:
+    - ref: backbone_Add_62
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_187_2_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_64:
+    inputs:
+    - ref: backbone_Add_63
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_187_3_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_65:
+    inputs:
+    - ref: backbone_Add_64
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_187_4_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_66:
+    inputs:
+    - ref: backbone_Add_65
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_187_5_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_67:
+    inputs:
+    - ref: backbone_Add_66
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_187_6_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_68:
+    inputs:
+    - ref: backbone_Add_67
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_187_7_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Silu_backbone_Add_68:
+    inputs:
+    - ref: backbone_Add_68
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  backbone_Add_69:
+    inputs:
+    - ref: Silu_backbone_Add_68
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Add_61
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Concat_4:
+    inputs:
+    - ref: backbone_Add_69
+      channel: 512
+      width: 16
+      height: 16
+    - ref: Silu_backbone_Add_52
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: fused_concat
+      axis: 1
+      split:
+        op_id: split
+        axis: 1
+        split:
+        - 512
+        - 512
+  backbone_Conv_193_0_0:
+    inputs:
+    - ref: backbone_Concat_4:0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_193_1_0:
+    inputs:
+    - ref: backbone_Concat_4:1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_193_0_1:
+    inputs:
+    - ref: backbone_Concat_4:0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_193_1_1:
+    inputs:
+    - ref: backbone_Concat_4:1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Add_70:
+    inputs:
+    - ref: backbone_Conv_193_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_193_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_71:
+    inputs:
+    - ref: backbone_Conv_193_0_1
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_193_1_1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Concat_5:
+    inputs:
+    - ref: backbone_Add_70
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Add_71
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 1024
+      width: 16
+      height: 16
+    op:
+      op_id: concat
+      axis: 1
+  Silu_backbone_Concat_5:
+    inputs:
+    - ref: backbone_Concat_5
+      channel: 1024
+      width: 16
+      height: 16
+    outputs:
+    - channel: 1024
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  backbone_Split_18:
+    inputs:
+    - ref: Silu_backbone_Concat_5
+      channel: 1024
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 512
+      - 512
+  backbone_Conv_197_0_0:
+    inputs:
+    - ref: backbone_Split_18:0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_197_1_0:
+    inputs:
+    - ref: backbone_Split_18:1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Add_72:
+    inputs:
+    - ref: backbone_Conv_197_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_197_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Silu_backbone_Add_72:
+    inputs:
+    - ref: backbone_Add_72
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  backbone_MaxPool_201:
+    inputs:
+    - ref: Silu_backbone_Add_72
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: maxpool2d
+      kernel: 5
+      stride: 1
+      padding: 2
+  backbone_MaxPool_202:
+    inputs:
+    - ref: backbone_MaxPool_201
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: maxpool2d
+      kernel: 5
+      stride: 1
+      padding: 2
+  backbone_MaxPool_203:
+    inputs:
+    - ref: backbone_MaxPool_202
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: maxpool2d
+      kernel: 5
+      stride: 1
+      padding: 2
+  backbone_Concat_6:
+    inputs:
+    - ref: Silu_backbone_Add_72
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_MaxPool_201
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_MaxPool_202
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_MaxPool_203
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    - channel: 512
+      width: 16
+      height: 16
+    - channel: 512
+      width: 16
+      height: 16
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: fused_concat
+      axis: 1
+      split:
+        op_id: split
+        axis: 1
+        split:
+        - 512
+        - 512
+        - 512
+        - 512
+  backbone_Conv_205_0_0:
+    inputs:
+    - ref: backbone_Concat_6:0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_205_1_0:
+    inputs:
+    - ref: backbone_Concat_6:1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_205_2_0:
+    inputs:
+    - ref: backbone_Concat_6:2
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_205_3_0:
+    inputs:
+    - ref: backbone_Concat_6:3
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_205_0_1:
+    inputs:
+    - ref: backbone_Concat_6:0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_205_1_1:
+    inputs:
+    - ref: backbone_Concat_6:1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_205_2_1:
+    inputs:
+    - ref: backbone_Concat_6:2
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Conv_205_3_1:
+    inputs:
+    - ref: backbone_Concat_6:3
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  backbone_Add_73:
+    inputs:
+    - ref: backbone_Conv_205_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_205_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_76:
+    inputs:
+    - ref: backbone_Conv_205_0_1
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_205_1_1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_74:
+    inputs:
+    - ref: backbone_Add_73
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_205_2_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_77:
+    inputs:
+    - ref: backbone_Add_76
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_205_2_1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_75:
+    inputs:
+    - ref: backbone_Add_74
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_205_3_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Add_78:
+    inputs:
+    - ref: backbone_Add_77
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Conv_205_3_1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  backbone_Concat_7:
+    inputs:
+    - ref: backbone_Add_75
+      channel: 512
+      width: 16
+      height: 16
+    - ref: backbone_Add_78
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 1024
+      width: 16
+      height: 16
+    op:
+      op_id: concat
+      axis: 1
+  Silu_backbone_Concat_7:
+    inputs:
+    - ref: backbone_Concat_7
+      channel: 1024
+      width: 16
+      height: 16
+    outputs:
+    - channel: 1024
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  neck_Split_0:
+    inputs:
+    - ref: Silu_backbone_Concat_7
+      channel: 1024
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 512
+      - 512
+  neck_Conv_0_0_0:
+    inputs:
+    - ref: neck_Split_0:0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Conv_0_1_0:
+    inputs:
+    - ref: neck_Split_0:1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Add_0:
+    inputs:
+    - ref: neck_Conv_0_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_0_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Silu_neck_Add_0:
+    inputs:
+    - ref: neck_Add_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  neck_Resize_4:
+    inputs:
+    - ref: Silu_neck_Add_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    op:
+      op_id: resize
+      scale:
+      - 1
+      - 1
+      - 2
+      - 2
+      mode: nearest
+  neck_Concat_0:
+    inputs:
+    - ref: neck_Resize_4
+      channel: 512
+      width: 32
+      height: 32
+    - ref: Silu_backbone_Conv_158
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    - channel: 512
+      width: 32
+      height: 32
+    op:
+      op_id: fused_concat
+      axis: 1
+      split:
+        op_id: split
+        axis: 1
+        split:
+        - 512
+        - 512
+  neck_Conv_6_0_0:
+    inputs:
+    - ref: neck_Concat_0:0
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Conv_6_1_0:
+    inputs:
+    - ref: neck_Concat_0:1
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Conv_10_0_0:
+    inputs:
+    - ref: neck_Concat_0:0
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Conv_10_1_0:
+    inputs:
+    - ref: neck_Concat_0:1
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Add_1:
+    inputs:
+    - ref: neck_Conv_6_0_0
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_6_1_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  neck_Add_2:
+    inputs:
+    - ref: neck_Conv_10_0_0
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_10_1_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Silu_neck_Add_1:
+    inputs:
+    - ref: neck_Add_1
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  Silu_neck_Add_2:
+    inputs:
+    - ref: neck_Add_2
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  neck_Conv_14:
+    inputs:
+    - ref: Silu_neck_Add_2
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_neck_Conv_14:
+    inputs:
+    - ref: neck_Conv_14
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  neck_Split_3:
+    inputs:
+    - ref: Silu_neck_Conv_14
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+  neck_Conv_18_0_0:
+    inputs:
+    - ref: neck_Split_3:0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_18_1_0:
+    inputs:
+    - ref: neck_Split_3:1
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_18_2_0:
+    inputs:
+    - ref: neck_Split_3:2
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_18_3_0:
+    inputs:
+    - ref: neck_Split_3:3
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Add_3:
+    inputs:
+    - ref: neck_Conv_18_0_0
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_18_1_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  neck_Add_4:
+    inputs:
+    - ref: neck_Add_3
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_18_2_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  neck_Add_5:
+    inputs:
+    - ref: neck_Add_4
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_18_3_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Silu_neck_Add_5:
+    inputs:
+    - ref: neck_Add_5
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  neck_Conv_22:
+    inputs:
+    - ref: Silu_neck_Add_5
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_neck_Conv_22:
+    inputs:
+    - ref: neck_Conv_22
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  neck_Split_4:
+    inputs:
+    - ref: Silu_neck_Conv_22
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+  neck_Conv_26_0_0:
+    inputs:
+    - ref: neck_Split_4:0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_26_1_0:
+    inputs:
+    - ref: neck_Split_4:1
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_26_2_0:
+    inputs:
+    - ref: neck_Split_4:2
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_26_3_0:
+    inputs:
+    - ref: neck_Split_4:3
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Add_6:
+    inputs:
+    - ref: neck_Conv_26_0_0
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_26_1_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  neck_Add_7:
+    inputs:
+    - ref: neck_Add_6
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_26_2_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  neck_Add_8:
+    inputs:
+    - ref: neck_Add_7
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_26_3_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Silu_neck_Add_8:
+    inputs:
+    - ref: neck_Add_8
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  neck_Concat_1:
+    inputs:
+    - ref: Silu_neck_Add_8
+      channel: 256
+      width: 32
+      height: 32
+    - ref: Silu_neck_Add_1
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    op:
+      op_id: concat
+      axis: 1
+  neck_Conv_31:
+    inputs:
+    - ref: neck_Concat_1
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_neck_Conv_31:
+    inputs:
+    - ref: neck_Conv_31
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  neck_Conv_35:
+    inputs:
+    - ref: Silu_neck_Conv_31
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_neck_Conv_35:
+    inputs:
+    - ref: neck_Conv_35
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  neck_Resize_39:
+    inputs:
+    - ref: Silu_neck_Conv_35
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 64
+      height: 64
+    op:
+      op_id: resize
+      scale:
+      - 1
+      - 1
+      - 2
+      - 2
+      mode: nearest
+  neck_Concat_2:
+    inputs:
+    - ref: neck_Resize_39
+      channel: 256
+      width: 64
+      height: 64
+    - ref: Silu_backbone_Conv_87
+      channel: 256
+      width: 64
+      height: 64
+    outputs:
+    - channel: 512
+      width: 64
+      height: 64
+    op:
+      op_id: concat
+      axis: 1
+  neck_Conv_41:
+    inputs:
+    - ref: neck_Concat_2
+      channel: 512
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Conv_45:
+    inputs:
+    - ref: neck_Concat_2
+      channel: 512
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_neck_Conv_41:
+    inputs:
+    - ref: neck_Conv_41
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  Silu_neck_Conv_45:
+    inputs:
+    - ref: neck_Conv_45
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  neck_Conv_49:
+    inputs:
+    - ref: Silu_neck_Conv_45
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 128
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_neck_Conv_49:
+    inputs:
+    - ref: neck_Conv_49
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  neck_Split_5:
+    inputs:
+    - ref: Silu_neck_Conv_49
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 64
+      width: 64
+      height: 64
+    - channel: 64
+      width: 64
+      height: 64
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+  neck_Conv_53_0_0:
+    inputs:
+    - ref: neck_Split_5:0
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_53_1_0:
+    inputs:
+    - ref: neck_Split_5:1
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Add_9:
+    inputs:
+    - ref: neck_Conv_53_0_0
+      channel: 128
+      width: 64
+      height: 64
+    - ref: neck_Conv_53_1_0
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: add
+  Silu_neck_Add_9:
+    inputs:
+    - ref: neck_Add_9
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  neck_Conv_57:
+    inputs:
+    - ref: Silu_neck_Add_9
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 128
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_neck_Conv_57:
+    inputs:
+    - ref: neck_Conv_57
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  neck_Split_6:
+    inputs:
+    - ref: Silu_neck_Conv_57
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 64
+      width: 64
+      height: 64
+    - channel: 64
+      width: 64
+      height: 64
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+  neck_Conv_61_0_0:
+    inputs:
+    - ref: neck_Split_6:0
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_61_1_0:
+    inputs:
+    - ref: neck_Split_6:1
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Add_10:
+    inputs:
+    - ref: neck_Conv_61_0_0
+      channel: 128
+      width: 64
+      height: 64
+    - ref: neck_Conv_61_1_0
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: add
+  Silu_neck_Add_10:
+    inputs:
+    - ref: neck_Add_10
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 128
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  neck_Concat_3:
+    inputs:
+    - ref: Silu_neck_Add_10
+      channel: 128
+      width: 64
+      height: 64
+    - ref: Silu_neck_Conv_41
+      channel: 128
+      width: 64
+      height: 64
+    outputs:
+    - channel: 256
+      width: 64
+      height: 64
+    op:
+      op_id: concat
+      axis: 1
+  neck_Conv_66:
+    inputs:
+    - ref: neck_Concat_3
+      channel: 256
+      width: 64
+      height: 64
+    outputs:
+    - channel: 256
+      width: 64
+      height: 64
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_neck_Conv_66:
+    inputs:
+    - ref: neck_Conv_66
+      channel: 256
+      width: 64
+      height: 64
+    outputs:
+    - channel: 256
+      width: 64
+      height: 64
+    op:
+      op_id: silu
+  neck_Split_7:
+    inputs:
+    - ref: Silu_neck_Conv_66
+      channel: 256
+      width: 64
+      height: 64
+    outputs:
+    - channel: 64
+      width: 64
+      height: 64
+    - channel: 64
+      width: 64
+      height: 64
+    - channel: 64
+      width: 64
+      height: 64
+    - channel: 64
+      width: 64
+      height: 64
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+  neck_Conv_70_0_0:
+    inputs:
+    - ref: neck_Split_7:0
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  neck_Conv_70_1_0:
+    inputs:
+    - ref: neck_Split_7:1
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  neck_Conv_70_2_0:
+    inputs:
+    - ref: neck_Split_7:2
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  neck_Conv_70_3_0:
+    inputs:
+    - ref: neck_Split_7:3
+      channel: 64
+      width: 64
+      height: 64
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  neck_Add_11:
+    inputs:
+    - ref: neck_Conv_70_0_0
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_70_1_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  neck_Add_12:
+    inputs:
+    - ref: neck_Add_11
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_70_2_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  neck_Add_13:
+    inputs:
+    - ref: neck_Add_12
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_70_3_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Silu_neck_Add_13:
+    inputs:
+    - ref: neck_Add_13
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  neck_Concat_4:
+    inputs:
+    - ref: Silu_neck_Add_13
+      channel: 256
+      width: 32
+      height: 32
+    - ref: Silu_neck_Conv_35
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    op:
+      op_id: concat
+      axis: 1
+  neck_Conv_75:
+    inputs:
+    - ref: neck_Concat_4
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Conv_79:
+    inputs:
+    - ref: neck_Concat_4
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_neck_Conv_75:
+    inputs:
+    - ref: neck_Conv_75
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  Silu_neck_Conv_79:
+    inputs:
+    - ref: neck_Conv_79
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  neck_Conv_83:
+    inputs:
+    - ref: Silu_neck_Conv_79
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_neck_Conv_83:
+    inputs:
+    - ref: neck_Conv_83
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  neck_Split_8:
+    inputs:
+    - ref: Silu_neck_Conv_83
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+  neck_Conv_87_0_0:
+    inputs:
+    - ref: neck_Split_8:0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_87_1_0:
+    inputs:
+    - ref: neck_Split_8:1
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_87_2_0:
+    inputs:
+    - ref: neck_Split_8:2
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_87_3_0:
+    inputs:
+    - ref: neck_Split_8:3
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Add_14:
+    inputs:
+    - ref: neck_Conv_87_0_0
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_87_1_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  neck_Add_15:
+    inputs:
+    - ref: neck_Add_14
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_87_2_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  neck_Add_16:
+    inputs:
+    - ref: neck_Add_15
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_87_3_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Silu_neck_Add_16:
+    inputs:
+    - ref: neck_Add_16
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  neck_Conv_91:
+    inputs:
+    - ref: Silu_neck_Add_16
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_neck_Conv_91:
+    inputs:
+    - ref: neck_Conv_91
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  neck_Split_9:
+    inputs:
+    - ref: Silu_neck_Conv_91
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+  neck_Conv_95_0_0:
+    inputs:
+    - ref: neck_Split_9:0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_95_1_0:
+    inputs:
+    - ref: neck_Split_9:1
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_95_2_0:
+    inputs:
+    - ref: neck_Split_9:2
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_95_3_0:
+    inputs:
+    - ref: neck_Split_9:3
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Add_17:
+    inputs:
+    - ref: neck_Conv_95_0_0
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_95_1_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  neck_Add_18:
+    inputs:
+    - ref: neck_Add_17
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_95_2_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  neck_Add_19:
+    inputs:
+    - ref: neck_Add_18
+      channel: 256
+      width: 32
+      height: 32
+    - ref: neck_Conv_95_3_0
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: add
+  Silu_neck_Add_19:
+    inputs:
+    - ref: neck_Add_19
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 256
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  neck_Concat_5:
+    inputs:
+    - ref: Silu_neck_Add_19
+      channel: 256
+      width: 32
+      height: 32
+    - ref: Silu_neck_Conv_75
+      channel: 256
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    op:
+      op_id: concat
+      axis: 1
+  neck_Conv_100:
+    inputs:
+    - ref: neck_Concat_5
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_neck_Conv_100:
+    inputs:
+    - ref: neck_Conv_100
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 32
+      height: 32
+    op:
+      op_id: silu
+  neck_Split_10:
+    inputs:
+    - ref: Silu_neck_Conv_100
+      channel: 512
+      width: 32
+      height: 32
+    outputs:
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    - channel: 64
+      width: 32
+      height: 32
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+  neck_Conv_104_0_0:
+    inputs:
+    - ref: neck_Split_10:0
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  neck_Conv_104_1_0:
+    inputs:
+    - ref: neck_Split_10:1
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  neck_Conv_104_2_0:
+    inputs:
+    - ref: neck_Split_10:2
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  neck_Conv_104_3_0:
+    inputs:
+    - ref: neck_Split_10:3
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  neck_Conv_104_4_0:
+    inputs:
+    - ref: neck_Split_10:4
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  neck_Conv_104_5_0:
+    inputs:
+    - ref: neck_Split_10:5
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  neck_Conv_104_6_0:
+    inputs:
+    - ref: neck_Split_10:6
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  neck_Conv_104_7_0:
+    inputs:
+    - ref: neck_Split_10:7
+      channel: 64
+      width: 32
+      height: 32
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  neck_Add_20:
+    inputs:
+    - ref: neck_Conv_104_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_104_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_21:
+    inputs:
+    - ref: neck_Add_20
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_104_2_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_22:
+    inputs:
+    - ref: neck_Add_21
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_104_3_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_23:
+    inputs:
+    - ref: neck_Add_22
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_104_4_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_24:
+    inputs:
+    - ref: neck_Add_23
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_104_5_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_25:
+    inputs:
+    - ref: neck_Add_24
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_104_6_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_26:
+    inputs:
+    - ref: neck_Add_25
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_104_7_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Silu_neck_Add_26:
+    inputs:
+    - ref: neck_Add_26
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  neck_Concat_6:
+    inputs:
+    - ref: Silu_neck_Add_26
+      channel: 512
+      width: 16
+      height: 16
+    - ref: Silu_neck_Add_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: fused_concat
+      axis: 1
+      split:
+        op_id: split
+        axis: 1
+        split:
+        - 512
+        - 512
+  neck_Conv_109_0_0:
+    inputs:
+    - ref: neck_Concat_6:0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Conv_109_1_0:
+    inputs:
+    - ref: neck_Concat_6:1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Conv_113_0_0:
+    inputs:
+    - ref: neck_Concat_6:0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Conv_113_1_0:
+    inputs:
+    - ref: neck_Concat_6:1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Add_27:
+    inputs:
+    - ref: neck_Conv_109_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_109_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_28:
+    inputs:
+    - ref: neck_Conv_113_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_113_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Silu_neck_Add_27:
+    inputs:
+    - ref: neck_Add_27
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  Silu_neck_Add_28:
+    inputs:
+    - ref: neck_Add_28
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  neck_Conv_117:
+    inputs:
+    - ref: Silu_neck_Add_28
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_neck_Conv_117:
+    inputs:
+    - ref: neck_Conv_117
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  neck_Split_13:
+    inputs:
+    - ref: Silu_neck_Conv_117
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+  neck_Conv_121_0_0:
+    inputs:
+    - ref: neck_Split_13:0
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_121_1_0:
+    inputs:
+    - ref: neck_Split_13:1
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_121_2_0:
+    inputs:
+    - ref: neck_Split_13:2
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_121_3_0:
+    inputs:
+    - ref: neck_Split_13:3
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_121_4_0:
+    inputs:
+    - ref: neck_Split_13:4
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_121_5_0:
+    inputs:
+    - ref: neck_Split_13:5
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_121_6_0:
+    inputs:
+    - ref: neck_Split_13:6
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_121_7_0:
+    inputs:
+    - ref: neck_Split_13:7
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Add_29:
+    inputs:
+    - ref: neck_Conv_121_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_121_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_30:
+    inputs:
+    - ref: neck_Add_29
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_121_2_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_31:
+    inputs:
+    - ref: neck_Add_30
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_121_3_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_32:
+    inputs:
+    - ref: neck_Add_31
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_121_4_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_33:
+    inputs:
+    - ref: neck_Add_32
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_121_5_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_34:
+    inputs:
+    - ref: neck_Add_33
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_121_6_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_35:
+    inputs:
+    - ref: neck_Add_34
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_121_7_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Silu_neck_Add_35:
+    inputs:
+    - ref: neck_Add_35
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  neck_Conv_125:
+    inputs:
+    - ref: Silu_neck_Add_35
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Silu_neck_Conv_125:
+    inputs:
+    - ref: neck_Conv_125
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  neck_Split_14:
+    inputs:
+    - ref: Silu_neck_Conv_125
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    - channel: 64
+      width: 16
+      height: 16
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+  neck_Conv_129_0_0:
+    inputs:
+    - ref: neck_Split_14:0
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_129_1_0:
+    inputs:
+    - ref: neck_Split_14:1
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_129_2_0:
+    inputs:
+    - ref: neck_Split_14:2
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_129_3_0:
+    inputs:
+    - ref: neck_Split_14:3
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_129_4_0:
+    inputs:
+    - ref: neck_Split_14:4
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_129_5_0:
+    inputs:
+    - ref: neck_Split_14:5
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_129_6_0:
+    inputs:
+    - ref: neck_Split_14:6
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Conv_129_7_0:
+    inputs:
+    - ref: neck_Split_14:7
+      channel: 64
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  neck_Add_36:
+    inputs:
+    - ref: neck_Conv_129_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_129_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_37:
+    inputs:
+    - ref: neck_Add_36
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_129_2_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_38:
+    inputs:
+    - ref: neck_Add_37
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_129_3_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_39:
+    inputs:
+    - ref: neck_Add_38
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_129_4_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_40:
+    inputs:
+    - ref: neck_Add_39
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_129_5_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_41:
+    inputs:
+    - ref: neck_Add_40
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_129_6_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_42:
+    inputs:
+    - ref: neck_Add_41
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_129_7_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  Silu_neck_Add_42:
+    inputs:
+    - ref: neck_Add_42
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  neck_Concat_7:
+    inputs:
+    - ref: Silu_neck_Add_42
+      channel: 512
+      width: 16
+      height: 16
+    - ref: Silu_neck_Add_27
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: fused_concat
+      axis: 1
+      split:
+        op_id: split
+        axis: 1
+        split:
+        - 512
+        - 512
+  neck_Conv_134_0_0:
+    inputs:
+    - ref: neck_Concat_7:0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Conv_134_1_0:
+    inputs:
+    - ref: neck_Concat_7:1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Conv_134_0_1:
+    inputs:
+    - ref: neck_Concat_7:0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Conv_134_1_1:
+    inputs:
+    - ref: neck_Concat_7:1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  neck_Add_43:
+    inputs:
+    - ref: neck_Conv_134_0_0
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_134_1_0
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Add_44:
+    inputs:
+    - ref: neck_Conv_134_0_1
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Conv_134_1_1
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 512
+      width: 16
+      height: 16
+    op:
+      op_id: add
+  neck_Concat_8:
+    inputs:
+    - ref: neck_Add_43
+      channel: 512
+      width: 16
+      height: 16
+    - ref: neck_Add_44
+      channel: 512
+      width: 16
+      height: 16
+    outputs:
+    - channel: 1024
+      width: 16
+      height: 16
+    op:
+      op_id: concat
+      axis: 1
+  Silu_neck_Concat_8:
+    inputs:
+    - ref: neck_Concat_8
+      channel: 1024
+      width: 16
+      height: 16
+    outputs:
+    - channel: 1024
+      width: 16
+      height: 16
+    op:
+      op_id: silu
+  graph_output:
+    type: output
+    inputs:
+    - ref: Silu_neck_Conv_66
+      channel: 256
+      channel_last: true
+      width: 64
+      height: 64
+    - ref: Silu_neck_Conv_100
+      channel: 512
+      channel_last: true
+      width: 32
+      height: 32
+    - ref: Silu_neck_Concat_8
+      channel: 1024
+      channel_last: true
+      width: 16
+      height: 16
+devices:
+  cima-0:
+    height: 4
+    width: 9
+    task_num: 128
+    devices:
+      pe-cluster:
+        devices:
+          xb:
+            kind: cima-xb
+            number: 16
+            profile:
+              in_channel: 576
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: cima-pe-cluster
+        number: 4
+      dmac:
+        kind: cima-dmac
+        profile:
+          in_channel: 256
+          out_channel: 64
+          in_bits: 8
+          out_bits: 8
+          weight_bits: 8
+          signed: true
+    kind: cima-node
+    number: 36

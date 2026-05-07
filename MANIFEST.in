@@ -1,0 +1,7 @@
+recursive-include cimruntime *.json *.yaml *.yml
+recursive-include Model2IR *.json *.yaml *.yml
+recursive-include backend *.json *.yaml *.yml
+recursive-include irtool *.json *.yaml *.yml
+recursive-include mapper *.json *.yaml *.yml
+recursive-include optimizer *.json *.yaml *.yml
+

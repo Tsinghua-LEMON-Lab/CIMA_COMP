@@ -1,0 +1,16 @@
+{
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/cimruntime",
+        "${workspaceFolder}/backend",
+        "${workspaceFolder}/mapper",
+        "${workspaceFolder}/optimizer",
+        "${workspaceFolder}/irtool",
+        "${workspaceFolder}/Model2IR",
+    ],
+    "python.autoComplete.extraPaths": [
+
+    ],
+    "python-envs.defaultEnvManager": "ms-python.python:conda",
+    "python-envs.defaultPackageManager": "ms-python.python:conda",
+    "python-envs.pythonProjects": []
+}

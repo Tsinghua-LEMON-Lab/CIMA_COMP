@@ -1,0 +1,9 @@
+test/Yolov5m/algo/weight_int_dict_cpu.pth
+test/Yolov5m/model/yolov5m_wo_head.onnx
+
+# Generated artifacts (users can regenerate locally)
+test/Yolov5m/ir/*.yaml
+test/Yolov5m/uvm/*.json
+test/Yolov5m/uvm/*.txt
+test/Yolov5m/uvm/*.pdf
+test/Yolov5m/chip/*.json
