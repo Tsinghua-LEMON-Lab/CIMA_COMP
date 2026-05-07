@@ -80,6 +80,8 @@ pip install -e .
 - `algo/`
   - `hard_params_dict_cpu.pth`（训练平台提供）
   - `weight_int_dict_cpu.pth`（训练平台提供）
+- `model/`
+  - `{model_name}.onnx`（例如 `yolov5m_wo_head.onnx`）
 - `ir/`（可为空，编译时自动生成）
 - `uvm/`（可为空，编译时自动生成）
 - `chip/`（可为空，编译时自动生成）
