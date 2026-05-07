@@ -1,0 +1,11 @@
+/build
+/dist
+/tmp*
+*.pyc
+__pycache__
+*.egg-info
+*.np
+/data
+/test/c200/fashionmnist/*.onnx
+/test/c200/fashionmnist/*.npy
+/test/c200/retinaface/*.onnx

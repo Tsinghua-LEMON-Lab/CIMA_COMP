@@ -1,0 +1,506 @@
+ir_version: e100-ir-1
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - height: 64
+      width: 64
+      channel: 1
+      channel_last: true
+  Conv_0:
+    inputs:
+    - height: 64
+      width: 64
+      ref: graph_input:0
+      channel: 1
+    outputs:
+    - height: 60
+      width: 60
+      channel: 16
+    weights:
+      bias:
+        shape:
+        - 16
+      weight:
+        shape:
+        - 16
+        - 1
+        - 5
+        - 5
+    op:
+      op_id: conv2d
+      in_channel: 1
+      out_channel: 16
+      bias: true
+      group: 1
+      kernel: 5
+      stride: 1
+      padding: 0
+    mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-cis:0
+        address:
+        - 0
+        - 0
+        - 25
+        - 16
+    calc_info:
+      weight_scale: 26.658278183277133
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_1:
+    inputs:
+    - height: 60
+      width: 60
+      ref: Conv_0
+      channel: 16
+    outputs:
+    - height: 60
+      width: 60
+      channel: 16
+    op:
+      op_id: relu
+  MaxPool_2:
+    inputs:
+    - height: 60
+      width: 60
+      ref: Relu_1
+      channel: 16
+    outputs:
+    - height: 30
+      width: 30
+      channel: 16
+    op:
+      op_id: maxpool2d
+      kernel: 2
+      stride: 2
+      padding: 0
+  Conv_3:
+    inputs:
+    - height: 30
+      width: 30
+      ref: MaxPool_2
+      channel: 16
+    outputs:
+    - height: 28
+      width: 28
+      channel: 48
+    weights:
+      bias:
+        shape:
+        - 48
+      weight:
+        shape:
+        - 48
+        - 16
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 16
+      out_channel: 48
+      bias: true
+      group: 1
+      kernel: 3
+      stride: 1
+      padding: 0
+    mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-cis:0
+        address:
+        - 0
+        - 16
+        - 144
+        - 48
+    calc_info:
+      weight_scale: 50.52076164534184
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_4:
+    inputs:
+    - height: 28
+      width: 28
+      ref: Conv_3
+      channel: 48
+    outputs:
+    - height: 28
+      width: 28
+      channel: 48
+    op:
+      op_id: relu
+  MaxPool_5:
+    inputs:
+    - height: 28
+      width: 28
+      ref: Relu_4
+      channel: 48
+    outputs:
+    - height: 14
+      width: 14
+      channel: 48
+    op:
+      op_id: maxpool2d
+      kernel: 2
+      stride: 2
+      padding: 0
+  Conv_6:
+    inputs:
+    - height: 14
+      width: 14
+      ref: MaxPool_5
+      channel: 48
+    outputs:
+    - height: 12
+      width: 12
+      channel: 64
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 48
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 48
+      out_channel: 64
+      bias: true
+      group: 1
+      kernel: 3
+      stride: 1
+      padding: 0
+    mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-cis:0
+        address:
+        - 0
+        - 64
+        - 432
+        - 64
+    calc_info:
+      weight_scale: 16.406371075738598
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_7:
+    inputs:
+    - height: 12
+      width: 12
+      ref: Conv_6
+      channel: 64
+    outputs:
+    - height: 12
+      width: 12
+      channel: 64
+    op:
+      op_id: relu
+  MaxPool_8:
+    inputs:
+    - height: 12
+      width: 12
+      ref: Relu_7
+      channel: 64
+    outputs:
+    - height: 6
+      width: 6
+      channel: 64
+    op:
+      op_id: maxpool2d
+      kernel: 2
+      stride: 2
+      padding: 0
+  Conv_9:
+    inputs:
+    - height: 6
+      width: 6
+      ref: MaxPool_8
+      channel: 64
+    outputs:
+    - height: 4
+      width: 4
+      channel: 64
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: true
+      group: 1
+      kernel: 3
+      stride: 1
+      padding: 0
+    mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-cis:0
+        address:
+        - 0
+        - 128
+        - 576
+        - 64
+    calc_info:
+      weight_scale: 10.718482173162785
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_10:
+    inputs:
+    - height: 4
+      width: 4
+      ref: Conv_9
+      channel: 64
+    outputs:
+    - height: 4
+      width: 4
+      channel: 64
+    op:
+      op_id: relu
+  MaxPool_11:
+    inputs:
+    - height: 4
+      width: 4
+      ref: Relu_10
+      channel: 64
+    outputs:
+    - height: 2
+      width: 2
+      channel: 64
+    op:
+      op_id: maxpool2d
+      kernel: 2
+      stride: 2
+      padding: 0
+  Reshape_12:
+    inputs:
+    - height: 2
+      width: 2
+      ref: MaxPool_11
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 256
+    op:
+      op_id: reshape
+      shape:
+      - 1
+      - -1
+  Gemm_13:
+    inputs:
+    - height: 1
+      width: 1
+      ref: Reshape_12
+      channel: 256
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    weights:
+      bias:
+        shape:
+        - 64
+      weight:
+        shape:
+        - 64
+        - 256
+    op:
+      op_id: matmul
+      in_channel: 256
+      out_channel: 64
+      bias: true
+    mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-cis:0
+        address:
+        - 0
+        - 192
+        - 256
+        - 64
+    calc_info:
+      weight_scale: 6.3262428799103985
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  Relu_14:
+    inputs:
+    - height: 1
+      width: 1
+      ref: Gemm_13
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 64
+    op:
+      op_id: relu
+  Gemm_15:
+    inputs:
+    - height: 1
+      width: 1
+      ref: Relu_14
+      channel: 64
+    outputs:
+    - height: 1
+      width: 1
+      channel: 10
+    weights:
+      bias:
+        shape:
+        - 10
+      weight:
+        shape:
+        - 10
+        - 64
+    op:
+      op_id: matmul
+      in_channel: 64
+      out_channel: 10
+      bias: true
+    mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_same_array: 1
+      para_diff_array: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-cis:0
+        address:
+        - 25
+        - 0
+        - 64
+        - 10
+    calc_info:
+      weight_scale: 4.862326137613332
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 0
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: false
+      adc_quant: false
+      ADC_LUT: false
+  graph_output:
+    type: output
+    inputs:
+    - height: 1
+      width: 1
+      ref: Gemm_15
+      channel: 10
+      channel_last: true
+devices:
+  CIS_v1:
+    kind: rram-cis
+    number: 1
+    profile:
+      adc_num: 64
+      in_channel: 576
+      out_channel: 512
+      in_bits: 2
+      out_bits: 4
+      weight_bits: 4
+      signed: true

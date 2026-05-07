@@ -1,0 +1,229 @@
+ir_version: e100-ir-1
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - height: 1
+      width: 1
+      channel: 27
+      channel_last: true
+  Relu:
+    inputs:
+    - ref: graph_input:0
+      channel: 27
+      width: 1
+      height: 1
+    outputs:
+    - channel: 27
+      width: 1
+      height: 1
+    op:
+      op_id: relu
+  fc:
+    inputs:
+    - height: 1
+      width: 1
+      ref: Relu
+      channel: 27
+    outputs:
+    - height: 1
+      width: 1
+      channel: 32
+    op:
+      op_id: fc
+      in_channel: 27
+      out_channel: 32
+      bias: false
+      group: 1
+      kernel: 1
+      stride: 1
+      padding: 1
+    mapping_info:
+      col_split_num: 4
+      row_split_num: 4
+      col_repeat_num: 2
+      row_repeat_num: 2
+      para_same_array: 1
+      para_diff_array: 1
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: rram-144k:0
+        address:
+        - 0
+        - 0
+        - 14
+        - 16
+      - index:
+        - 0
+        - 0
+        - 1
+        device: rram-144k:1
+        address:
+        - 0
+        - 0
+        - 14
+        - 16
+      - index:
+        - 0
+        - 0
+        - 2
+        device: rram-144k:2
+        address:
+        - 0
+        - 0
+        - 14
+        - 16
+      - index:
+        - 0
+        - 0
+        - 3
+        device: rram-144k:3
+        address:
+        - 0
+        - 0
+        - 14
+        - 16
+      - index:
+        - 0
+        - 1
+        - 0
+        device: rram-144k:4
+        address:
+        - 0
+        - 0
+        - 13
+        - 16
+      - index:
+        - 0
+        - 1
+        - 1
+        device: rram-144k:5
+        address:
+        - 0
+        - 0
+        - 13
+        - 16
+      - index:
+        - 0
+        - 1
+        - 2
+        device: rram-144k:6
+        address:
+        - 0
+        - 0
+        - 13
+        - 16
+      - index:
+        - 0
+        - 1
+        - 3
+        device: rram-144k:7
+        address:
+        - 0
+        - 0
+        - 13
+        - 16
+      - index:
+        - 0
+        - 2
+        - 0
+        device: rram-144k:8
+        address:
+        - 0
+        - 0
+        - 14
+        - 16
+      - index:
+        - 0
+        - 2
+        - 1
+        device: rram-144k:9
+        address:
+        - 0
+        - 0
+        - 14
+        - 16
+      - index:
+        - 0
+        - 2
+        - 2
+        device: rram-144k:10
+        address:
+        - 0
+        - 0
+        - 14
+        - 16
+      - index:
+        - 0
+        - 2
+        - 3
+        device: rram-144k:11
+        address:
+        - 0
+        - 0
+        - 14
+        - 16
+      - index:
+        - 0
+        - 3
+        - 0
+        device: rram-144k:12
+        address:
+        - 0
+        - 0
+        - 13
+        - 16
+      - index:
+        - 0
+        - 3
+        - 1
+        device: rram-144k:13
+        address:
+        - 0
+        - 0
+        - 13
+        - 16
+      - index:
+        - 0
+        - 3
+        - 2
+        device: rram-144k:14
+        address:
+        - 0
+        - 0
+        - 13
+        - 16
+      - index:
+        - 0
+        - 3
+        - 3
+        device: rram-144k:15
+        address:
+        - 0
+        - 0
+        - 13
+        - 16
+    calc_info:
+      weight_scale: 1
+      assigned_output_quant_scale: 1
+      output_quant_mode: 1
+      it_time: 1
+      reg_shift_mode: 0
+      output_half_level: 64
+      shift_expansion_mode: bit_shift
+      noise_scale: 0.0
+      adc_clamp: true
+      adc_quant: true
+      ADC_LUT: false
+  graph_output:
+    type: output
+    inputs:
+    - ref: fc
+      channel: 32
+      channel_last: true
+      width: 1
+      height: 1 
+  

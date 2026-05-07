@@ -1,0 +1,6884 @@
+ir_version: e100-ir-1
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - channel: 64
+      channel_last: true
+      width: 112
+      height: 112
+  Relu_1:
+    inputs:
+    - ref: graph_input:0
+      channel: 64
+      width: 112
+      height: 112
+    outputs:
+    - channel: 64
+      width: 112
+      height: 112
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0x1c00'
+      credit_len:
+      - 112
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:33
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  MaxPool_2:
+    inputs:
+    - ref: Relu_1
+      channel: 64
+      width: 112
+      height: 112
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: maxpool2d
+      kernel: 3
+      stride: 2
+      padding: 1
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0x5400'
+      credit_len:
+      - 112
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:23
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_0:
+    inputs:
+    - ref: MaxPool_2
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 56
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:5
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_3:
+    inputs:
+    - ref: identity_0
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x3700'
+        - '0x2a00'
+      credit_len:
+      - 56
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:0.cima-pe-cluster:0.cima-xb:0
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_4:
+    inputs:
+    - ref: Conv_3
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0xe00'
+      credit_len:
+      - 56
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:22
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_5:
+    inputs:
+    - ref: Relu_4
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x2e40'
+        - '0x2a00'
+      credit_len:
+      - 56
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:1.cima-pe-cluster:0.cima-xb:0
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Add_6:
+    inputs:
+    - ref: Conv_5
+      channel: 64
+      width: 56
+      height: 56
+    - ref: identity_0
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0xe00'
+      credit_len:
+      - 56
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:24
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_7:
+    inputs:
+    - ref: Add_6
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0xe00'
+      credit_len:
+      - 56
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:19
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_8:
+    inputs:
+    - ref: Relu_7
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1240'
+        - '0x2a00'
+      credit_len:
+      - 56
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:2.cima-pe-cluster:0.cima-xb:0
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_9:
+    inputs:
+    - ref: Conv_8
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0xe00'
+      credit_len:
+      - 56
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:20
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_10:
+    inputs:
+    - ref: Relu_9
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1240'
+        - '0x2a00'
+      credit_len:
+      - 56
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:6.cima-pe-cluster:0.cima-xb:0
+        address:
+        - 0
+        - 0
+        - 576
+        - 64
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Add_11:
+    inputs:
+    - ref: Conv_10
+      channel: 64
+      width: 56
+      height: 56
+    - ref: Relu_7
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0xe00'
+      credit_len:
+      - 56
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:28
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_12:
+    inputs:
+    - ref: Add_11
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0xe00'
+      credit_len:
+      - 56
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:33
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_13:
+    inputs:
+    - ref: Relu_12
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x2040'
+        - '0x2a00'
+      credit_len:
+      - 56
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:7.cima-pe-cluster:0.cima-xb:0
+        address:
+        - 0
+        - 0
+        - 576
+        - 128
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_16:
+    inputs:
+    - ref: Relu_12
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 2
+      padding: 0
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1240'
+        - '0x1c00'
+      credit_len:
+      - 56
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:8.cima-pe-cluster:0.cima-xb:0
+        address:
+        - 0
+        - 0
+        - 64
+        - 128
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_14:
+    inputs:
+    - ref: Conv_13
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:34
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_15_Split:
+    inputs:
+    - ref: Relu_14
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 64
+      width: 28
+      height: 28
+    - channel: 64
+      width: 28
+      height: 28
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2900'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:26
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_15_0_0:
+    inputs:
+    - ref: Conv_15_Split:0
+      channel: 64
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x2e40'
+        - '0x1500'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:9.cima-pe-cluster:0.cima-xb:0
+        address:
+        - 0
+        - 0
+        - 576
+        - 128
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_15_1_0:
+    inputs:
+    - ref: Conv_15_Split:1
+      channel: 64
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x2e40'
+        - '0x1500'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:10.cima-pe-cluster:0.cima-xb:0
+        address:
+        - 0
+        - 0
+        - 576
+        - 128
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_1:
+    inputs:
+    - ref: Conv_15_0_0
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x6100'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:0
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_2:
+    inputs:
+    - ref: Conv_15_1_0
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x5840'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:1
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_15_Add_0:
+    inputs:
+    - ref: identity_1
+      channel: 128
+      width: 28
+      height: 28
+    - ref: identity_2
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:25
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Add_17:
+    inputs:
+    - ref: Conv_15_Add_0
+      channel: 128
+      width: 28
+      height: 28
+    - ref: Conv_16
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2040'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:10
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_18:
+    inputs:
+    - ref: Add_17
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:25
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_19_Split:
+    inputs:
+    - ref: Relu_18
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 64
+      width: 28
+      height: 28
+    - channel: 64
+      width: 28
+      height: 28
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2900'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:30
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_19_0_0:
+    inputs:
+    - ref: Conv_19_Split:0
+      channel: 64
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x23c0'
+        - '0x1500'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:11.cima-pe-cluster:0.cima-xb:0
+        address:
+        - 0
+        - 0
+        - 576
+        - 128
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_19_1_0:
+    inputs:
+    - ref: Conv_19_Split:1
+      channel: 64
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0x1500'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:12.cima-pe-cluster:0.cima-xb:0
+        address:
+        - 0
+        - 0
+        - 576
+        - 128
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_3:
+    inputs:
+    - ref: Conv_19_0_0
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x3c40'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:2
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_4:
+    inputs:
+    - ref: Conv_19_1_0
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:3
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_19_Add_0:
+    inputs:
+    - ref: identity_3
+      channel: 128
+      width: 28
+      height: 28
+    - ref: identity_4
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:30
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_20:
+    inputs:
+    - ref: Conv_19_Add_0
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:24
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_21_Split:
+    inputs:
+    - ref: Relu_20
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 64
+      width: 28
+      height: 28
+    - channel: 64
+      width: 28
+      height: 28
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1240'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:7
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_21_0_0:
+    inputs:
+    - ref: Conv_21_Split:0
+      channel: 64
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0x1500'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:13.cima-pe-cluster:0.cima-xb:0
+        address:
+        - 0
+        - 0
+        - 576
+        - 128
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_21_1_0:
+    inputs:
+    - ref: Conv_21_Split:1
+      channel: 64
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0x1500'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:14.cima-pe-cluster:0.cima-xb:0
+        address:
+        - 0
+        - 0
+        - 576
+        - 128
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_5:
+    inputs:
+    - ref: Conv_21_0_0
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:4
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_6:
+    inputs:
+    - ref: Conv_21_1_0
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:5
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_21_Add_0:
+    inputs:
+    - ref: identity_5
+      channel: 128
+      width: 28
+      height: 28
+    - ref: identity_6
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2900'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:0
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Add_22:
+    inputs:
+    - ref: Conv_21_Add_0
+      channel: 128
+      width: 28
+      height: 28
+    - ref: Relu_18
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:17
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_23:
+    inputs:
+    - ref: Add_22
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:23
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_27:
+    inputs:
+    - ref: Relu_23
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 128
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 2
+      padding: 0
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0x1c00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:18.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 128
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_24_Split:
+    inputs:
+    - ref: Relu_23
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 64
+      width: 28
+      height: 28
+    - channel: 64
+      width: 28
+      height: 28
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0xe00'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:29
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_24_0_0:
+    inputs:
+    - ref: Conv_24_Split:0
+      channel: 64
+      width: 28
+      height: 28
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1e80'
+        - '0x1500'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:15.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 576
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_24_1_0:
+    inputs:
+    - ref: Conv_24_Split:1
+      channel: 64
+      width: 28
+      height: 28
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0x1500'
+      credit_len:
+      - 28
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:16.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 576
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_13:
+    inputs:
+    - ref: Conv_27
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x4340'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:9
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_7:
+    inputs:
+    - ref: Conv_24_0_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x3c40'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:6
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_8:
+    inputs:
+    - ref: Conv_24_1_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x4a40'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:7
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_24_Add_0:
+    inputs:
+    - ref: identity_7
+      channel: 256
+      width: 14
+      height: 14
+    - ref: identity_8
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:21
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_25:
+    inputs:
+    - ref: Conv_24_Add_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:22
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_26_Split:
+    inputs:
+    - ref: Relu_25
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 64
+      width: 14
+      height: 14
+    - channel: 64
+      width: 14
+      height: 14
+    - channel: 64
+      width: 14
+      height: 14
+    - channel: 64
+      width: 14
+      height: 14
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x15c0'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:11
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_26_0_0:
+    inputs:
+    - ref: Conv_26_Split:0
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:17.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 576
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_26_1_0:
+    inputs:
+    - ref: Conv_26_Split:1
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:19.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 576
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_26_2_0:
+    inputs:
+    - ref: Conv_26_Split:2
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:20.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 576
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_26_3_0:
+    inputs:
+    - ref: Conv_26_Split:3
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:21.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 576
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_9:
+    inputs:
+    - ref: Conv_26_0_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2e40'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:8
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_10:
+    inputs:
+    - ref: Conv_26_1_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x4340'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:10
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_11:
+    inputs:
+    - ref: Conv_26_2_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x38c0'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:11
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_12:
+    inputs:
+    - ref: Conv_26_3_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:3
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_26_Add_0:
+    inputs:
+    - ref: identity_9
+      channel: 256
+      width: 14
+      height: 14
+    - ref: identity_10
+      channel: 256
+      width: 14
+      height: 14
+    - ref: identity_11
+      channel: 256
+      width: 14
+      height: 14
+    - ref: identity_12
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:27
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Add_28:
+    inputs:
+    - ref: Conv_26_Add_0
+      channel: 256
+      width: 14
+      height: 14
+    - ref: identity_13
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:15
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_29:
+    inputs:
+    - ref: Add_28
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:16
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_30_Split:
+    inputs:
+    - ref: Relu_29
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 64
+      width: 14
+      height: 14
+    - channel: 64
+      width: 14
+      height: 14
+    - channel: 64
+      width: 14
+      height: 14
+    - channel: 64
+      width: 14
+      height: 14
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x7c0'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:11
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_30_0_0:
+    inputs:
+    - ref: Conv_30_Split:0
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:22.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 576
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_30_1_0:
+    inputs:
+    - ref: Conv_30_Split:1
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:23.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 576
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_30_2_0:
+    inputs:
+    - ref: Conv_30_Split:2
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:24.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 576
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_30_3_0:
+    inputs:
+    - ref: Conv_30_Split:3
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:25.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 576
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_14:
+    inputs:
+    - ref: Conv_30_0_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:4
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_15:
+    inputs:
+    - ref: Conv_30_1_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1e80'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:5
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_16:
+    inputs:
+    - ref: Conv_30_2_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x3380'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:15
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_17:
+    inputs:
+    - ref: Conv_30_3_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2580'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:16
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_30_Add_0:
+    inputs:
+    - ref: identity_14
+      channel: 256
+      width: 14
+      height: 14
+    - ref: identity_15
+      channel: 256
+      width: 14
+      height: 14
+    - ref: identity_16
+      channel: 256
+      width: 14
+      height: 14
+    - ref: identity_17
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:26
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_31:
+    inputs:
+    - ref: Conv_30_Add_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:20
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_32_Split:
+    inputs:
+    - ref: Relu_31
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 64
+      width: 14
+      height: 14
+    - channel: 64
+      width: 14
+      height: 14
+    - channel: 64
+      width: 14
+      height: 14
+    - channel: 64
+      width: 14
+      height: 14
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:28
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_32_0_0:
+    inputs:
+    - ref: Conv_32_Split:0
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:26.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 576
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_32_1_0:
+    inputs:
+    - ref: Conv_32_Split:1
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:27.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 576
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_32_2_0:
+    inputs:
+    - ref: Conv_32_Split:2
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:29.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 576
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_32_3_0:
+    inputs:
+    - ref: Conv_32_Split:3
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:30.cima-pe-cluster:0.cima-xb:0-1
+        address:
+        - 0
+        - 0
+        - 576
+        - 256
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_18:
+    inputs:
+    - ref: Conv_32_0_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:17
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_19:
+    inputs:
+    - ref: Conv_32_1_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2c80'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:18
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_20:
+    inputs:
+    - ref: Conv_32_2_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2900'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:20
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_21:
+    inputs:
+    - ref: Conv_32_3_0
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1e80'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:3
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_32_Add_0:
+    inputs:
+    - ref: identity_18
+      channel: 256
+      width: 14
+      height: 14
+    - ref: identity_19
+      channel: 256
+      width: 14
+      height: 14
+    - ref: identity_20
+      channel: 256
+      width: 14
+      height: 14
+    - ref: identity_21
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2040'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:1
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Add_33:
+    inputs:
+    - ref: Conv_32_Add_0
+      channel: 256
+      width: 14
+      height: 14
+    - ref: Relu_29
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:14
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_34:
+    inputs:
+    - ref: Add_33
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:13
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_38:
+    inputs:
+    - ref: Relu_34
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 2
+      padding: 0
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0x1c00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:0.cima-pe-cluster:1.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 256
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_35_Split:
+    inputs:
+    - ref: Relu_34
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 64
+      width: 14
+      height: 14
+    - channel: 64
+      width: 14
+      height: 14
+    - channel: 64
+      width: 14
+      height: 14
+    - channel: 64
+      width: 14
+      height: 14
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1240'
+        - '0xe00'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:10
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_35_0_0:
+    inputs:
+    - ref: Conv_35_Split:0
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:28.cima-pe-cluster:0.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_35_1_0:
+    inputs:
+    - ref: Conv_35_Split:1
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:33.cima-pe-cluster:0.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_35_2_0:
+    inputs:
+    - ref: Conv_35_Split:2
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:34.cima-pe-cluster:0.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_35_3_0:
+    inputs:
+    - ref: Conv_35_Split:3
+      channel: 64
+      width: 14
+      height: 14
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0xa80'
+      credit_len:
+      - 14
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:35.cima-pe-cluster:0.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_22:
+    inputs:
+    - ref: Conv_35_0_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2900'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:19
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_23:
+    inputs:
+    - ref: Conv_35_1_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2900'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:24
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_24:
+    inputs:
+    - ref: Conv_35_2_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2900'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:25
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_25:
+    inputs:
+    - ref: Conv_35_3_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2900'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:17
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_35_Add_0:
+    inputs:
+    - ref: identity_22
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_23
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_24
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_25
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2040'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:9
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_36:
+    inputs:
+    - ref: Conv_35_Add_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:12
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_37_Split:
+    inputs:
+    - ref: Relu_36
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:21
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_37_0_0:
+    inputs:
+    - ref: Conv_37_Split:0
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x7c0'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:0.cima-pe-cluster:2.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_37_1_0:
+    inputs:
+    - ref: Conv_37_Split:1
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:0.cima-pe-cluster:3.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_37_2_0:
+    inputs:
+    - ref: Conv_37_Split:2
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:1.cima-pe-cluster:1.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_37_3_0:
+    inputs:
+    - ref: Conv_37_Split:3
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x15c0'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:1.cima-pe-cluster:2.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_37_4_0:
+    inputs:
+    - ref: Conv_37_Split:4
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x1080'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:1.cima-pe-cluster:3.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_37_5_0:
+    inputs:
+    - ref: Conv_37_Split:5
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:2.cima-pe-cluster:1.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_37_6_0:
+    inputs:
+    - ref: Conv_37_Split:6
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x7c0'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:2.cima-pe-cluster:2.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_37_7_0:
+    inputs:
+    - ref: Conv_37_Split:7
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:2.cima-pe-cluster:3.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_26:
+    inputs:
+    - ref: Conv_37_0_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2900'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:27
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_27:
+    inputs:
+    - ref: Conv_37_3_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2900'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:28
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_28:
+    inputs:
+    - ref: Conv_37_4_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x6f00'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:0
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_29:
+    inputs:
+    - ref: Conv_37_6_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2900'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:29
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_30:
+    inputs:
+    - ref: Conv_37_7_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x6640'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:1
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_37_Add_0:
+    inputs:
+    - ref: identity_26
+      channel: 512
+      width: 7
+      height: 7
+    - ref: Conv_37_1_0
+      channel: 512
+      width: 7
+      height: 7
+    - ref: Conv_37_2_0
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_27
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_28
+      channel: 512
+      width: 7
+      height: 7
+    - ref: Conv_37_5_0
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_29
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_30
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:15
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Add_39:
+    inputs:
+    - ref: Conv_37_Add_0
+      channel: 512
+      width: 7
+      height: 7
+    - ref: Conv_38
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:26
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_40:
+    inputs:
+    - ref: Add_39
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:19
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_41_Split:
+    inputs:
+    - ref: Relu_40
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1240'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:9
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_41_0_0:
+    inputs:
+    - ref: Conv_41_Split:0
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:6.cima-pe-cluster:1.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_41_1_0:
+    inputs:
+    - ref: Conv_41_Split:1
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x7c0'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:6.cima-pe-cluster:2.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_41_2_0:
+    inputs:
+    - ref: Conv_41_Split:2
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:6.cima-pe-cluster:3.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_41_3_0:
+    inputs:
+    - ref: Conv_41_Split:3
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:7.cima-pe-cluster:1.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_41_4_0:
+    inputs:
+    - ref: Conv_41_Split:4
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x7c0'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:7.cima-pe-cluster:2.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_41_5_0:
+    inputs:
+    - ref: Conv_41_Split:5
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:7.cima-pe-cluster:3.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_41_6_0:
+    inputs:
+    - ref: Conv_41_Split:6
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:8.cima-pe-cluster:1.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_41_7_0:
+    inputs:
+    - ref: Conv_41_Split:7
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x7c0'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:8.cima-pe-cluster:2.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_31:
+    inputs:
+    - ref: Conv_41_1_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x3700'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:24
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_32:
+    inputs:
+    - ref: Conv_41_2_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1e80'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:4
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_33:
+    inputs:
+    - ref: Conv_41_4_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x1b00'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:34
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_34:
+    inputs:
+    - ref: Conv_41_5_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2c80'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:5
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_41_Add_0:
+    inputs:
+    - ref: Conv_41_0_0
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_31
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_32
+      channel: 512
+      width: 7
+      height: 7
+    - ref: Conv_41_3_0
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_33
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_34
+      channel: 512
+      width: 7
+      height: 7
+    - ref: Conv_41_6_0
+      channel: 512
+      width: 7
+      height: 7
+    - ref: Conv_41_7_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:35
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_42:
+    inputs:
+    - ref: Conv_41_Add_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:30
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_43_Split:
+    inputs:
+    - ref: Relu_42
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    - channel: 64
+      width: 7
+      height: 7
+    op:
+      op_id: split
+      axis: 1
+      split:
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+      - 64
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:29
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_43_0_0:
+    inputs:
+    - ref: Conv_43_Split:0
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:8.cima-pe-cluster:3.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_43_1_0:
+    inputs:
+    - ref: Conv_43_Split:1
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:9.cima-pe-cluster:1.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_43_2_0:
+    inputs:
+    - ref: Conv_43_Split:2
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x7c0'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:9.cima-pe-cluster:2.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_43_3_0:
+    inputs:
+    - ref: Conv_43_Split:3
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:9.cima-pe-cluster:3.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_43_4_0:
+    inputs:
+    - ref: Conv_43_Split:4
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0xd00'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:10.cima-pe-cluster:1.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_43_5_0:
+    inputs:
+    - ref: Conv_43_Split:5
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x7c0'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:10.cima-pe-cluster:2.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_43_6_0:
+    inputs:
+    - ref: Conv_43_Split:6
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:10.cima-pe-cluster:3.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_43_7_0:
+    inputs:
+    - ref: Conv_43_Split:7
+      channel: 64
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+    CIMA_mapping_info:
+      col_split_num: 1
+      row_split_num: 1
+      col_repeat_num: 1
+      row_repeat_num: 1
+      para_diff_array: 1
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0x540'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:11.cima-pe-cluster:1.cima-xb:0-3
+        address:
+        - 0
+        - 0
+        - 576
+        - 512
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_35:
+    inputs:
+    - ref: Conv_43_2_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x3700'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:27
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_36:
+    inputs:
+    - ref: Conv_43_4_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2580'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:12
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_37:
+    inputs:
+    - ref: Conv_43_5_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x3700'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:19
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_38:
+    inputs:
+    - ref: Conv_43_6_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x5140'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:9
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  identity_39:
+    inputs:
+    - ref: Conv_43_7_0
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: identity
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x2580'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:13
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Conv_43_Add_0:
+    inputs:
+    - ref: Conv_43_0_0
+      channel: 512
+      width: 7
+      height: 7
+    - ref: Conv_43_1_0
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_35
+      channel: 512
+      width: 7
+      height: 7
+    - ref: Conv_43_3_0
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_36
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_37
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_38
+      channel: 512
+      width: 7
+      height: 7
+    - ref: identity_39
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:1
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Add_44:
+    inputs:
+    - ref: Conv_43_Add_0
+      channel: 512
+      width: 7
+      height: 7
+    - ref: Relu_40
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: add
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:18
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  Relu_45:
+    inputs:
+    - ref: Add_44
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: relu
+    CIMA_mapping_info:
+      in_line_buffer_addr:
+      - - '0x280'
+        - '0xe00'
+      credit_len:
+      - 7
+      mappings:
+      - index:
+        - 0
+        - 0
+        - 0
+        device: cima-0.cima-node:27
+        address: 0
+    CIMA_calc_info:
+      ADC_quant_level: 0
+      scale_shift_num:
+      - 0
+      scale:
+      - 1
+      offset:
+      - 0
+      accumulate_shift_num: 0
+      data_type: 4bit
+      scale_first: true
+  graph_output:
+    type: output
+    inputs:
+    - ref: Relu_45
+      channel: 512
+      channel_last: true
+      width: 7
+      height: 7
+devices:
+  cima-0:
+    height: 4
+    width: 9
+    task_num: 128
+    devices:
+      pe-cluster:
+        devices:
+          xb:
+            kind: cima-xb
+            number: 16
+            profile:
+              in_channel: 576
+              out_channel: 128
+              in_bits: 8
+              out_bits: 8
+              weight_bits: 4
+              signed: true
+        kind: cima-pe-cluster
+        number: 4
+      dmac:
+        kind: cima-dmac
+        profile:
+          in_channel: 256
+          out_channel: 64
+          in_bits: 8
+          out_bits: 8
+          weight_bits: 8
+          signed: true
+    kind: cima-node
+    number: 36

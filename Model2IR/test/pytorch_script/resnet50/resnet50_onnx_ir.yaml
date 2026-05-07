@@ -1,0 +1,2339 @@
+ir_version: e100-ir-1
+layers:
+  graph_input:
+    type: input
+    inputs:
+    - channel: 3
+      channel_last: true
+      width: 224
+      height: 224
+  Conv_0:
+    inputs:
+    - ref: graph_input:0
+      channel: 3
+      width: 224
+      height: 224
+    outputs:
+    - channel: 64
+      width: 112
+      height: 112
+    weights:
+      weight:
+        shape:
+        - 64
+        - 3
+        - 7
+        - 7
+    op:
+      op_id: conv2d
+      in_channel: 3
+      out_channel: 64
+      bias: false
+      kernel: 7
+      stride: 2
+      padding: 3
+      dilation: 1
+  Relu_1:
+    inputs:
+    - ref: Conv_0
+      channel: 64
+      width: 112
+      height: 112
+    outputs:
+    - channel: 64
+      width: 112
+      height: 112
+    op:
+      op_id: relu
+  MaxPool_2:
+    inputs:
+    - ref: Relu_1
+      channel: 64
+      width: 112
+      height: 112
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: maxpool2d
+      kernel: 3
+      stride: 2
+      padding: 1
+  Conv_3:
+    inputs:
+    - ref: MaxPool_2
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 64
+        - 64
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Conv_4:
+    inputs:
+    - ref: MaxPool_2
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 256
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Relu_5:
+    inputs:
+    - ref: Conv_3
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: relu
+  Conv_6:
+    inputs:
+    - ref: Relu_5
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Relu_7:
+    inputs:
+    - ref: Conv_6
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: relu
+  Conv_8:
+    inputs:
+    - ref: Relu_7
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 256
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_9:
+    inputs:
+    - ref: Conv_8
+      channel: 256
+      width: 56
+      height: 56
+    - ref: Conv_4
+      channel: 256
+      width: 56
+      height: 56
+    outputs:
+    - channel: 256
+      width: 56
+      height: 56
+    op:
+      op_id: add
+  Relu_10:
+    inputs:
+    - ref: Add_9
+      channel: 256
+      width: 56
+      height: 56
+    outputs:
+    - channel: 256
+      width: 56
+      height: 56
+    op:
+      op_id: relu
+  Conv_11:
+    inputs:
+    - ref: Relu_10
+      channel: 256
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 64
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 64
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Relu_12:
+    inputs:
+    - ref: Conv_11
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: relu
+  Conv_13:
+    inputs:
+    - ref: Relu_12
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Relu_14:
+    inputs:
+    - ref: Conv_13
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: relu
+  Conv_15:
+    inputs:
+    - ref: Relu_14
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 256
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_16:
+    inputs:
+    - ref: Conv_15
+      channel: 256
+      width: 56
+      height: 56
+    - ref: Relu_10
+      channel: 256
+      width: 56
+      height: 56
+    outputs:
+    - channel: 256
+      width: 56
+      height: 56
+    op:
+      op_id: add
+  Relu_17:
+    inputs:
+    - ref: Add_16
+      channel: 256
+      width: 56
+      height: 56
+    outputs:
+    - channel: 256
+      width: 56
+      height: 56
+    op:
+      op_id: relu
+  Conv_18:
+    inputs:
+    - ref: Relu_17
+      channel: 256
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 64
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 64
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Relu_19:
+    inputs:
+    - ref: Conv_18
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: relu
+  Conv_20:
+    inputs:
+    - ref: Relu_19
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 64
+        - 64
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 64
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Relu_21:
+    inputs:
+    - ref: Conv_20
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 64
+      width: 56
+      height: 56
+    op:
+      op_id: relu
+  Conv_22:
+    inputs:
+    - ref: Relu_21
+      channel: 64
+      width: 56
+      height: 56
+    outputs:
+    - channel: 256
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 256
+        - 64
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 64
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_23:
+    inputs:
+    - ref: Conv_22
+      channel: 256
+      width: 56
+      height: 56
+    - ref: Relu_17
+      channel: 256
+      width: 56
+      height: 56
+    outputs:
+    - channel: 256
+      width: 56
+      height: 56
+    op:
+      op_id: add
+  Relu_24:
+    inputs:
+    - ref: Add_23
+      channel: 256
+      width: 56
+      height: 56
+    outputs:
+    - channel: 256
+      width: 56
+      height: 56
+    op:
+      op_id: relu
+  Conv_25:
+    inputs:
+    - ref: Relu_24
+      channel: 256
+      width: 56
+      height: 56
+    outputs:
+    - channel: 128
+      width: 56
+      height: 56
+    weights:
+      weight:
+        shape:
+        - 128
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Conv_26:
+    inputs:
+    - ref: Relu_24
+      channel: 256
+      width: 56
+      height: 56
+    outputs:
+    - channel: 512
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 512
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 2
+      padding: 0
+      dilation: 1
+  Relu_27:
+    inputs:
+    - ref: Conv_25
+      channel: 128
+      width: 56
+      height: 56
+    outputs:
+    - channel: 128
+      width: 56
+      height: 56
+    op:
+      op_id: relu
+  Conv_28:
+    inputs:
+    - ref: Relu_27
+      channel: 128
+      width: 56
+      height: 56
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 128
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  Relu_29:
+    inputs:
+    - ref: Conv_28
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+  Conv_30:
+    inputs:
+    - ref: Relu_29
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 512
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 512
+        - 128
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_31:
+    inputs:
+    - ref: Conv_30
+      channel: 512
+      width: 28
+      height: 28
+    - ref: Conv_26
+      channel: 512
+      width: 28
+      height: 28
+    outputs:
+    - channel: 512
+      width: 28
+      height: 28
+    op:
+      op_id: add
+  Relu_32:
+    inputs:
+    - ref: Add_31
+      channel: 512
+      width: 28
+      height: 28
+    outputs:
+    - channel: 512
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+  Conv_33:
+    inputs:
+    - ref: Relu_32
+      channel: 512
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Relu_34:
+    inputs:
+    - ref: Conv_33
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+  Conv_35:
+    inputs:
+    - ref: Relu_34
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 128
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Relu_36:
+    inputs:
+    - ref: Conv_35
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+  Conv_37:
+    inputs:
+    - ref: Relu_36
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 512
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 512
+        - 128
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_38:
+    inputs:
+    - ref: Conv_37
+      channel: 512
+      width: 28
+      height: 28
+    - ref: Relu_32
+      channel: 512
+      width: 28
+      height: 28
+    outputs:
+    - channel: 512
+      width: 28
+      height: 28
+    op:
+      op_id: add
+  Relu_39:
+    inputs:
+    - ref: Add_38
+      channel: 512
+      width: 28
+      height: 28
+    outputs:
+    - channel: 512
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+  Conv_40:
+    inputs:
+    - ref: Relu_39
+      channel: 512
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Relu_41:
+    inputs:
+    - ref: Conv_40
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+  Conv_42:
+    inputs:
+    - ref: Relu_41
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 128
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Relu_43:
+    inputs:
+    - ref: Conv_42
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+  Conv_44:
+    inputs:
+    - ref: Relu_43
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 512
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 512
+        - 128
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_45:
+    inputs:
+    - ref: Conv_44
+      channel: 512
+      width: 28
+      height: 28
+    - ref: Relu_39
+      channel: 512
+      width: 28
+      height: 28
+    outputs:
+    - channel: 512
+      width: 28
+      height: 28
+    op:
+      op_id: add
+  Relu_46:
+    inputs:
+    - ref: Add_45
+      channel: 512
+      width: 28
+      height: 28
+    outputs:
+    - channel: 512
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+  Conv_47:
+    inputs:
+    - ref: Relu_46
+      channel: 512
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 128
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Relu_48:
+    inputs:
+    - ref: Conv_47
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+  Conv_49:
+    inputs:
+    - ref: Relu_48
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 128
+        - 128
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 128
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Relu_50:
+    inputs:
+    - ref: Conv_49
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 128
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+  Conv_51:
+    inputs:
+    - ref: Relu_50
+      channel: 128
+      width: 28
+      height: 28
+    outputs:
+    - channel: 512
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 512
+        - 128
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 128
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_52:
+    inputs:
+    - ref: Conv_51
+      channel: 512
+      width: 28
+      height: 28
+    - ref: Relu_46
+      channel: 512
+      width: 28
+      height: 28
+    outputs:
+    - channel: 512
+      width: 28
+      height: 28
+    op:
+      op_id: add
+  Relu_53:
+    inputs:
+    - ref: Add_52
+      channel: 512
+      width: 28
+      height: 28
+    outputs:
+    - channel: 512
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+  Conv_54:
+    inputs:
+    - ref: Relu_53
+      channel: 512
+      width: 28
+      height: 28
+    outputs:
+    - channel: 256
+      width: 28
+      height: 28
+    weights:
+      weight:
+        shape:
+        - 256
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Conv_55:
+    inputs:
+    - ref: Relu_53
+      channel: 512
+      width: 28
+      height: 28
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 1024
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 1024
+      bias: false
+      kernel: 1
+      stride: 2
+      padding: 0
+      dilation: 1
+  Relu_56:
+    inputs:
+    - ref: Conv_54
+      channel: 256
+      width: 28
+      height: 28
+    outputs:
+    - channel: 256
+      width: 28
+      height: 28
+    op:
+      op_id: relu
+  Conv_57:
+    inputs:
+    - ref: Relu_56
+      channel: 256
+      width: 28
+      height: 28
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  Relu_58:
+    inputs:
+    - ref: Conv_57
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_59:
+    inputs:
+    - ref: Relu_58
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 1024
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 1024
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_60:
+    inputs:
+    - ref: Conv_59
+      channel: 1024
+      width: 14
+      height: 14
+    - ref: Conv_55
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    op:
+      op_id: add
+  Relu_61:
+    inputs:
+    - ref: Add_60
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_62:
+    inputs:
+    - ref: Relu_61
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 1024
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 1024
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Relu_63:
+    inputs:
+    - ref: Conv_62
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_64:
+    inputs:
+    - ref: Relu_63
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Relu_65:
+    inputs:
+    - ref: Conv_64
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_66:
+    inputs:
+    - ref: Relu_65
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 1024
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 1024
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_67:
+    inputs:
+    - ref: Conv_66
+      channel: 1024
+      width: 14
+      height: 14
+    - ref: Relu_61
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    op:
+      op_id: add
+  Relu_68:
+    inputs:
+    - ref: Add_67
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_69:
+    inputs:
+    - ref: Relu_68
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 1024
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 1024
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Relu_70:
+    inputs:
+    - ref: Conv_69
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_71:
+    inputs:
+    - ref: Relu_70
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Relu_72:
+    inputs:
+    - ref: Conv_71
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_73:
+    inputs:
+    - ref: Relu_72
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 1024
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 1024
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_74:
+    inputs:
+    - ref: Conv_73
+      channel: 1024
+      width: 14
+      height: 14
+    - ref: Relu_68
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    op:
+      op_id: add
+  Relu_75:
+    inputs:
+    - ref: Add_74
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_76:
+    inputs:
+    - ref: Relu_75
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 1024
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 1024
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Relu_77:
+    inputs:
+    - ref: Conv_76
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_78:
+    inputs:
+    - ref: Relu_77
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Relu_79:
+    inputs:
+    - ref: Conv_78
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_80:
+    inputs:
+    - ref: Relu_79
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 1024
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 1024
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_81:
+    inputs:
+    - ref: Conv_80
+      channel: 1024
+      width: 14
+      height: 14
+    - ref: Relu_75
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    op:
+      op_id: add
+  Relu_82:
+    inputs:
+    - ref: Add_81
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_83:
+    inputs:
+    - ref: Relu_82
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 1024
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 1024
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Relu_84:
+    inputs:
+    - ref: Conv_83
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_85:
+    inputs:
+    - ref: Relu_84
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Relu_86:
+    inputs:
+    - ref: Conv_85
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_87:
+    inputs:
+    - ref: Relu_86
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 1024
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 1024
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_88:
+    inputs:
+    - ref: Conv_87
+      channel: 1024
+      width: 14
+      height: 14
+    - ref: Relu_82
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    op:
+      op_id: add
+  Relu_89:
+    inputs:
+    - ref: Add_88
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_90:
+    inputs:
+    - ref: Relu_89
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 1024
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 1024
+      out_channel: 256
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Relu_91:
+    inputs:
+    - ref: Conv_90
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_92:
+    inputs:
+    - ref: Relu_91
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 256
+        - 256
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 256
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Relu_93:
+    inputs:
+    - ref: Conv_92
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 256
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_94:
+    inputs:
+    - ref: Relu_93
+      channel: 256
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 1024
+        - 256
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 256
+      out_channel: 1024
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_95:
+    inputs:
+    - ref: Conv_94
+      channel: 1024
+      width: 14
+      height: 14
+    - ref: Relu_89
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    op:
+      op_id: add
+  Relu_96:
+    inputs:
+    - ref: Add_95
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 1024
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_97:
+    inputs:
+    - ref: Relu_96
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 512
+      width: 14
+      height: 14
+    weights:
+      weight:
+        shape:
+        - 512
+        - 1024
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 1024
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Conv_98:
+    inputs:
+    - ref: Relu_96
+      channel: 1024
+      width: 14
+      height: 14
+    outputs:
+    - channel: 2048
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 2048
+        - 1024
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 1024
+      out_channel: 2048
+      bias: false
+      kernel: 1
+      stride: 2
+      padding: 0
+      dilation: 1
+  Relu_99:
+    inputs:
+    - ref: Conv_97
+      channel: 512
+      width: 14
+      height: 14
+    outputs:
+    - channel: 512
+      width: 14
+      height: 14
+    op:
+      op_id: relu
+  Conv_100:
+    inputs:
+    - ref: Relu_99
+      channel: 512
+      width: 14
+      height: 14
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 2
+      padding: 1
+      dilation: 1
+  Relu_101:
+    inputs:
+    - ref: Conv_100
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: relu
+  Conv_102:
+    inputs:
+    - ref: Relu_101
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 2048
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 2048
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 2048
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_103:
+    inputs:
+    - ref: Conv_102
+      channel: 2048
+      width: 7
+      height: 7
+    - ref: Conv_98
+      channel: 2048
+      width: 7
+      height: 7
+    outputs:
+    - channel: 2048
+      width: 7
+      height: 7
+    op:
+      op_id: add
+  AveragePool_104:
+    inputs:
+    - ref: Pad_121
+      channel: 2048
+      width: 9
+      height: 9
+    outputs:
+    - channel: 2048
+      width: 2
+      height: 2
+    op:
+      op_id: avgpool2d
+      kernel: 4
+      stride: 4
+      padding: 0
+  AveragePool_105:
+    inputs:
+    - ref: AveragePool_104
+      channel: 2048
+      width: 2
+      height: 2
+    outputs:
+    - channel: 2048
+      width: 1
+      height: 1
+    op:
+      op_id: avgpool2d
+      kernel: 2
+      stride: 2
+      padding: 0
+  Relu_106:
+    inputs:
+    - ref: Add_103
+      channel: 2048
+      width: 7
+      height: 7
+    outputs:
+    - channel: 2048
+      width: 7
+      height: 7
+    op:
+      op_id: relu
+  Conv_107:
+    inputs:
+    - ref: Relu_106
+      channel: 2048
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 2048
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 2048
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Relu_108:
+    inputs:
+    - ref: Conv_107
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: relu
+  Conv_109:
+    inputs:
+    - ref: Relu_108
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Relu_110:
+    inputs:
+    - ref: Conv_109
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: relu
+  Conv_111:
+    inputs:
+    - ref: Relu_110
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 2048
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 2048
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 2048
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_112:
+    inputs:
+    - ref: Conv_111
+      channel: 2048
+      width: 7
+      height: 7
+    - ref: Relu_106
+      channel: 2048
+      width: 7
+      height: 7
+    outputs:
+    - channel: 2048
+      width: 7
+      height: 7
+    op:
+      op_id: add
+  Relu_113:
+    inputs:
+    - ref: Add_112
+      channel: 2048
+      width: 7
+      height: 7
+    outputs:
+    - channel: 2048
+      width: 7
+      height: 7
+    op:
+      op_id: relu
+  Conv_114:
+    inputs:
+    - ref: Relu_113
+      channel: 2048
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 2048
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 2048
+      out_channel: 512
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Relu_115:
+    inputs:
+    - ref: Conv_114
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: relu
+  Conv_116:
+    inputs:
+    - ref: Relu_115
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 512
+        - 512
+        - 3
+        - 3
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 512
+      bias: false
+      kernel: 3
+      stride: 1
+      padding: 1
+      dilation: 1
+  Relu_117:
+    inputs:
+    - ref: Conv_116
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 512
+      width: 7
+      height: 7
+    op:
+      op_id: relu
+  Conv_118:
+    inputs:
+    - ref: Relu_117
+      channel: 512
+      width: 7
+      height: 7
+    outputs:
+    - channel: 2048
+      width: 7
+      height: 7
+    weights:
+      weight:
+        shape:
+        - 2048
+        - 512
+        - 1
+        - 1
+    op:
+      op_id: conv2d
+      in_channel: 512
+      out_channel: 2048
+      bias: false
+      kernel: 1
+      stride: 1
+      padding: 0
+      dilation: 1
+  Add_119:
+    inputs:
+    - ref: Conv_118
+      channel: 2048
+      width: 7
+      height: 7
+    - ref: Relu_113
+      channel: 2048
+      width: 7
+      height: 7
+    outputs:
+    - channel: 2048
+      width: 7
+      height: 7
+    op:
+      op_id: add
+  Relu_120:
+    inputs:
+    - ref: Add_119
+      channel: 2048
+      width: 7
+      height: 7
+    outputs:
+    - channel: 2048
+      width: 7
+      height: 7
+    op:
+      op_id: relu
+  Pad_121:
+    inputs:
+    - ref: Relu_120
+      channel: 2048
+      width: 7
+      height: 7
+    outputs:
+    - channel: 2048
+      width: 9
+      height: 9
+    op:
+      op_id: pad
+      pads:
+      - 0
+      - 0
+      - 1
+      - 1
+      - 0
+      - 0
+      - 1
+      - 1
+      value: 0.0
+  Flatten_122:
+    inputs:
+    - ref: AveragePool_105
+      channel: 2048
+      width: 1
+      height: 1
+    outputs:
+    - channel: 2048
+      width: 1
+      height: 1
+    op:
+      op_id: flatten
+      start_dim: 1
+  MatMul_123:
+    inputs:
+    - ref: Flatten_122
+      channel: 2048
+      width: 1
+      height: 1
+    outputs:
+    - channel: 1000
+      width: 1
+      height: 1
+    weights:
+      weight:
+        shape:
+        - 1000
+        - 2048
+    op:
+      op_id: matmul
+      in_channel: 2048
+      out_channel: 1000
+      bias: false
+  graph_output:
+    type: output
+    inputs:
+    - ref: MatMul_123
+      channel: 1000
+      channel_last: true
+      width: 1
+      height: 1

@@ -1,0 +1,4 @@
+{
+    "cfg_path": "test\\CIMA\\resnet18\\\\performance_optim\\resnet18_distance_cal_num_optim.json",
+    "global_cfg_path": "test\\CIMA\\resnet18\\performance_optim\\CIMA_cfg.json"
+}

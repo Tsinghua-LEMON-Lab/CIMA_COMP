@@ -1,0 +1,27 @@
+{
+    "Global_Batch": 1,
+    "Global_Bitwise": 4,
+    "Dmem_Capacity": 524288, // 512KB
+    "Dram_Read_Latency": 160,
+    "Dram_Write_Latency": 160,
+    "Sch_Receive_Latency": 20,
+    "Range_Switch_ratio": 0,
+    "Range_Switch_Enable": true,
+    "Receive_End_Stop": true,
+    "Trace_Period": 1000,
+    "Cfg_Rram_Charge_Delay": 30,
+    "cfg_rram_calc_delay": 30,
+    "DMAC_Period": 3,
+    "Clock_Period": 3,
+    "DMAC_MAC_Unit_Num": 64,
+    "Log_Level": 0,
+    "Trace_Enable": false,
+    "Perf_Single_Trace": false,
+    "Log_Action": 4,
+    "Trace_Thread": false,
+    "Pe_Kernal_Buffer_Num": 2,
+    "Mesh_Row": 4,
+    "Mesh_Col": 9,
+    "Hosti_Core": "Core0_4",
+    "DDRI_Core": "Core3_4"
+}
