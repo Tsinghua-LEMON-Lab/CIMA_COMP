@@ -13,3 +13,5 @@ test/Yolov5m/uvm/*
 test/Yolov5m/chip/*
 !test/Yolov5m/chip/.gitkeep
 
+test/Yolov5m/algo/weight_int_chip.pth
+test/Yolov5m/algo/activation_lut.pth
