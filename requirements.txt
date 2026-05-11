@@ -1,0 +1,12 @@
+# Core dependencies for CIM_TC_open runtime and Yolov5m demo pipeline
+numpy
+onnx
+onnxruntime
+pyyaml
+scipy
+torch
+graphviz
+sko
+
+# Optional but recommended for analysis/visualization utilities
+matplotlib

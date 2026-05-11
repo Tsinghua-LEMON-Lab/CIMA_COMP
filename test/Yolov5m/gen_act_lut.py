@@ -87,6 +87,7 @@ def run_act_lut(
     output_file=None,
     verbose=False,
 ):
+    print("[STEP] Act LUT compile started.")
     if systemc_cfg is None:
         systemc_cfg = f"uvm\\{model_name}_systemc.json"
     if output_file is None:
@@ -94,11 +95,16 @@ def run_act_lut(
 
     with open(systemc_cfg, "r") as f:
         sys_cfg = json.load(f)
+    print("[STEP] Act LUT: system config loaded.")
     act_lut = torch.load(act_lut_path)
+    print("[STEP] Act LUT: activation LUT loaded.")
 
     act_info = collect_act_info(sys_cfg, act_lut, verbose=verbose)
+    print("[STEP] Act LUT: routing collected.")
     with open(output_file, "w") as f:
         json.dump(act_info, f, indent=4)
+    print("[STEP] Act LUT: output json generated.")
+    print("[STEP] Act LUT compile finished.")
 
 
 def parse_args():

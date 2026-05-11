@@ -18,8 +18,12 @@ def run_chip(
     chip_json="chip\\yolov5m_wo_head_chip.json",
     module_name="yolov5",
 ):
+    print("[STEP] Chip compile started.")
     code_chip = ChipCodeGen(systemc_json, module_name=module_name)
+    print("[STEP] Chip: generator initialized.")
     code_chip.gen_layers(chip_json_file=chip_json)
+    print("[STEP] Chip: chip json generated.")
+    print("[STEP] Chip compile finished.")
 
 
 def parse_args():

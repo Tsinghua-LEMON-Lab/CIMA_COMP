@@ -5,6 +5,9 @@ import json
 import pickle
 import argparse
 import sys
+import traceback
+from contextlib import redirect_stdout, redirect_stderr
+from datetime import datetime
 from pathlib import Path
 try:
     import yaml
@@ -119,6 +122,7 @@ def get_chip_weight_adc_range(w_int, soft_scale, w_code_upper_limit=22, w_code_l
     hard_w_scale = 204.48 / 127  # RRAM conductance level
     current_level = [32, 40, 64, 80, 120, 160, 200]
     adc_range = {}
+    adc_debug_info = {}
     w_int_ = {}
     for k, v in w_int.items():
         v_ = 0
@@ -139,15 +143,41 @@ def get_chip_weight_adc_range(w_int, soft_scale, w_code_upper_limit=22, w_code_l
             
             min_diff_index = torch.argmin(torch.tensor(diff)).item()
             adc_range[k] = int(min_diff_index)
-            v_ = v * w_code[min_diff_index]
+            selected_w_code = int(w_code[min_diff_index])
+            selected_level = int(current_level[min_diff_index])
+            v_ = v * selected_w_code
+            adc_debug_info[k] = {
+                "adc_range_index": int(min_diff_index),
+                "current_level": selected_level,
+                "selected_w_code": selected_w_code,
+                "soft_scale": soft_scale_,
+                "hard_scale": float(
+                    hard_in_scale
+                    * hard_w_scale
+                    * (127 / selected_level)
+                    * selected_w_code
+                ),
+            }
         else:
             adc_range[k] = 0
             v_ = v
+            adc_debug_info[k] = {
+                "adc_range_index": 0,
+                "current_level": int(current_level[0]),
+                "selected_w_code": None,
+                "soft_scale": None,
+                "hard_scale": None,
+            }
         w_int_[k + '.weight'] = v_
+        adc_debug_info[k]["weight_key"] = k + ".weight"
+        if hasattr(v_, "shape"):
+            adc_debug_info[k]["weight_shape"] = list(v_.shape)
+        else:
+            adc_debug_info[k]["weight_shape"] = None
 
     torch.save(w_int_, 'algo\\weight_int_chip.pth')
 
-    return w_int_, adc_range
+    return w_int_, adc_range, adc_debug_info
 
 def get_insert_op(hard_params):
 
@@ -211,38 +241,11 @@ def compile(model_name, insert_op_list=None, specify_output_layer=None):
     dump_ir_yaml(onnx_ir, f'ir\\{model_name}_onnx_ir.yaml')
 
     masked_id_list = [(0,3), (0,4), (0,5), (3,4), (3,5)]
-    masked_pe = [
-        'cima-0.cima-node:2.cima-pe-cluster:0',
-        'cima-0.cima-node:7.cima-pe-cluster:2',
-        'cima-0.cima-node:7.cima-pe-cluster:3',
-        'cima-0.cima-node:7.cima-pe-cluster:0',
-        'cima-0.cima-node:8.cima-pe-cluster:3',
-        'cima-0.cima-node:12.cima-pe-cluster:2',
-        'cima-0.cima-node:12.cima-pe-cluster:1',
-        'cima-0.cima-node:13.cima-pe-cluster:1',
-        'cima-0.cima-node:14.cima-pe-cluster:2',
-        'cima-0.cima-node:15.cima-pe-cluster:1',
-        'cima-0.cima-node:16.cima-pe-cluster:3',
-        'cima-0.cima-node:17.cima-pe-cluster:1',
-        'cima-0.cima-node:17.cima-pe-cluster:3',
-        'cima-0.cima-node:18.cima-pe-cluster:1',
-        'cima-0.cima-node:21.cima-pe-cluster:3',
-        'cima-0.cima-node:25.cima-pe-cluster:0',
-        'cima-0.cima-node:25.cima-pe-cluster:3',
-        'cima-0.cima-node:26.cima-pe-cluster:3',
-        'cima-0.cima-node:28.cima-pe-cluster:2',
-        'cima-0.cima-node:33.cima-pe-cluster:0',
-        'cima-0.cima-node:33.cima-pe-cluster:2',
-        'cima-0.cima-node:35.cima-pe-cluster:2',
-    ]
+    masked_pe = []
     masked_xb = []
     for pe in masked_pe:
         for i in range(16):
             masked_xb.append(pe + f'.cima-xb:{i}')
-    # masked_xb = []
-    # print('Masked devices:')
-    # for device in masked_device:
-    #     print(device)
 
     # mapping
     map = mapper(ir=onnx_ir, device = devices,
@@ -329,43 +332,97 @@ def ir_update(model_name, insert_op_params, adc_range, bn_params, dmac_params):
 
     dump_ir_yaml(ir, f'ir\\{model_name}_dmem_opt_mapped_ir_w_params.yaml')
 
-def run_mapper(model_name):
-
+def _run_mapper_impl(model_name, detail_log=print, step_reporter=print):
     path = f'algo\\'
     hard_params = torch.load(path + 'hard_params_dict_cpu.pth')
+    detail_log(f"[DETAIL] Loaded hard params: {len(hard_params)} entries from {path}hard_params_dict_cpu.pth")
+
     activation_lut = get_lut_params(hard_params)
-    print('Activation LUT generated.')
-    # print("activation_lut keys:", activation_lut.keys())
+    detail_log(f"[DETAIL] Activation LUT entries: {len(activation_lut)}")
+    step_reporter('[STEP] Mapper: Activation LUT generated.')
 
     soft_scale = get_soft_scale(hard_params)
     w_int = torch.load(path + 'weight_int_dict_cpu.pth')
-    weights, adc_range = get_chip_weight_adc_range(w_int, soft_scale)
-    print('Weights for chip generated.')
+    detail_log(f"[DETAIL] Soft scale entries: {len(soft_scale)}")
+    detail_log(f"[DETAIL] Loaded weight_int entries: {len(w_int)} from {path}weight_int_dict_cpu.pth")
+    weights, adc_range, adc_debug_info = get_chip_weight_adc_range(w_int, soft_scale)
+    detail_log(f"[DETAIL] Weight-int chip entries: {len(weights)}")
+    detail_log(f"[DETAIL] ADC range entries: {len(adc_range)}")
+    detail_log('[DETAIL] ADC and weight_int mapping details:')
+    for layer_name in sorted(adc_debug_info.keys()):
+        info = adc_debug_info[layer_name]
+        detail_log(
+            f"[DETAIL] Layer: {layer_name}, "
+            f"ADC range index: {info['adc_range_index']}, "
+            f"Current level: {info['current_level']}, "
+            f"Selected w_code: {info['selected_w_code']}, "
+            f"Weight key: {info['weight_key']}, "
+            f"Weight shape: {info['weight_shape']}"
+        )
+        if info["soft_scale"] is not None and info["hard_scale"] is not None:
+            detail_log(
+                f"[DETAIL]   soft_scale={info['soft_scale']:.8f}, "
+                f"hard_scale={info['hard_scale']:.8f}, "
+                f"abs_diff={abs(info['soft_scale'] - info['hard_scale']):.8f}"
+            )
+    step_reporter('[STEP] Mapper: Weights for chip generated.')
 
-    current_level = [32, 40, 64, 80, 120, 160, 200]
-    # for k, v in adc_range.items():
-    #     print(f'Layer: {k},  Current level: {current_level[v]}')
     insert_op_list = get_insert_op(hard_params)
-    # print('Insert op list:')
-    # print(insert_op_list)
+    detail_log(f"[DETAIL] Insert op count: {len(insert_op_list)}")
+    if insert_op_list:
+        detail_log(f"[DETAIL] Insert op preview (first 10): {insert_op_list[:10]}")
     insert_op_name_dict = compile(model_name,insert_op_list=insert_op_list)
-    print('IR mapping completed.')
+    detail_log(f"[DETAIL] Insert-op name mapping keys: {len(insert_op_name_dict)}")
+    detail_log(f"[DETAIL] Generated IR files:")
+    detail_log(f"[DETAIL]   ir\\{model_name}_onnx_ir.yaml")
+    detail_log(f"[DETAIL]   ir\\{model_name}_mapped_ir.yaml")
+    detail_log(f"[DETAIL]   ir\\{model_name}_dmem_opt_mapped_ir.yaml")
+    step_reporter('[STEP] Mapper: IR mapping completed.')
+
     insert_params = get_insert_op_params(hard_params, insert_op_name_dict)
-    print('insert op params extracted.')
-    # print('Insert op list:', insert_op_list)
-    # print('Insert op name dict:', insert_op_name_dict)
-    # print('Insert op params:', insert_params)
+    detail_log(f"[DETAIL] Insert-op params count: {len(insert_params)}")
+    step_reporter('[STEP] Mapper: Insert-op params extracted.')
 
     bn_params = get_bn_params(hard_params)
-    print('BN params extracted.')
-    # print("bn_params keys:", bn_params.keys())
+    detail_log(f"[DETAIL] BN params count: {len(bn_params)}")
+    if bn_params:
+        detail_log(f"[DETAIL] BN params preview keys (first 10): {list(bn_params.keys())[:10]}")
+    step_reporter('[STEP] Mapper: BN params extracted.')
 
     dmac_params = get_dmac_params(hard_params)
-    print('DMAC params extracted.')
-    # print("dmac_params keys:", dmac_params.keys())
+    detail_log(f"[DETAIL] DMAC params count: {len(dmac_params)}")
+    detail_log(f"[DETAIL] DMAC params keys: {list(dmac_params.keys())}")
+    step_reporter('[STEP] Mapper: DMAC params extracted.')
 
     ir_update(model_name, insert_params, adc_range, bn_params, dmac_params)
-    print('IR updated with hardware parameters.')
+    detail_log(f"[DETAIL] Final IR file: ir\\{model_name}_dmem_opt_mapped_ir_w_params.yaml")
+    step_reporter('[STEP] Mapper: IR updated with hardware parameters.')
+
+
+def run_mapper(model_name, log_file=None):
+    log_path = Path(log_file) if log_file else Path("ir") / f"{model_name}_compile.log"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    console_stream = sys.stdout
+
+    def step_reporter(msg):
+        print(msg, file=console_stream)
+        print(msg)
+
+    with open(log_path, "w", encoding="utf-8") as log_fp:
+        with redirect_stdout(log_fp), redirect_stderr(log_fp):
+            print(f"[INFO] Compile started at {datetime.now().isoformat(timespec='seconds')}")
+            print(f"[INFO] Model name: {model_name}")
+            print(f"[INFO] Log file: {log_path.as_posix()}")
+            try:
+                step_reporter("[STEP] Mapper compile started.")
+                _run_mapper_impl(model_name, detail_log=print, step_reporter=step_reporter)
+                print(f"[INFO] Compile finished at {datetime.now().isoformat(timespec='seconds')}")
+                step_reporter("[STEP] Mapper compile finished.")
+            except Exception:
+                print(f"[ERROR] Compile failed at {datetime.now().isoformat(timespec='seconds')}")
+                traceback.print_exc()
+                print("[STEP] Mapper compile failed.", file=console_stream)
+                raise
 
 
 def params_init(model_name):
@@ -375,5 +432,6 @@ def params_init(model_name):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Run mapping flow and export mapped IR files.")
     parser.add_argument("--model-name", default="yolov5m_wo_head")
+    parser.add_argument("--log-file", default=None, help="Compile log file path. Default: ir/{model_name}_compile.log")
     args = parser.parse_args()
-    run_mapper(args.model_name)
+    run_mapper(args.model_name, log_file=args.log_file)

@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: CIM_TC_open
+Version: 0.1
+Summary: Aggregated distribution for CIM_TC_open monorepo.
+Requires-Python: >=3.9
+Requires-Dist: numpy
+Requires-Dist: onnx
+Requires-Dist: onnxruntime
+Requires-Dist: pyyaml
+Requires-Dist: scipy
+Requires-Dist: torch
+Requires-Dist: graphviz
+Requires-Dist: matplotlib

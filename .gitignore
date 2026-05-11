@@ -1,1 +1,15 @@
 
+# Build/runtime output files
+*.log
+__pycache__/
+
+# Yolov5m generated outputs (keep folder placeholders)
+test/Yolov5m/ir/*
+!test/Yolov5m/ir/.gitkeep
+
+test/Yolov5m/uvm/*
+!test/Yolov5m/uvm/.gitkeep
+
+test/Yolov5m/chip/*
+!test/Yolov5m/chip/.gitkeep
+

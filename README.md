@@ -45,7 +45,7 @@
 推荐安装命令（Yolov5m demo）：
 
 ```bash
-pip install pyyaml numpy torch onnx onnxruntime scipy graphviz matplotlib
+pip install -r requirements.txt
 pip install -e .
 ```
 
@@ -66,6 +66,7 @@ pip install -e .
 ## 安装（开发模式）
 
 ```bash
+pip install -r requirements.txt
 pip install -e .
 ```
 
